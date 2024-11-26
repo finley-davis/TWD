@@ -85,7 +85,6 @@ def plot_theil_sen_regression(x, y):
 #plotting again
 plot_theil_sen_regression(intervals, median_depths.values)
 
-
 #shows legend and plot
 plt.legend()
 plt.show()
