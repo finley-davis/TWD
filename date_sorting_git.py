@@ -2,7 +2,7 @@ import pandas as pd
 
 # reads given aquifer csv file into a pandas dataframe
 # Note: the number of columns varies per csv file, so the number of columns must be adjusted accordingly
-csv_file = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/TWD Ogallala Excel CSV_parsed_datesorted.csv'  
+csv_file = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/Edwards (Balcones Fault Zone) Aquifer.csv'  
 # variavble data now has my aquifer csv file loaded into it
 data = pd.read_csv(csv_file)
 
@@ -30,7 +30,7 @@ data.iloc[:, 12] = data['Year']
 data = data.drop(columns=['Year'])
 
 # save the sorted CSV to a new file 
-data.to_csv('/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/TWD Ogallala Excel CSV_parsed_datesorted_corrected.csv', index=False)
+data.to_csv('/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/Edwards (Balcones Fault Zone) Aquifer.csv', index=False)
 
 # checking w/ print
 print(data.head())
