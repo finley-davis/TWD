@@ -20,6 +20,18 @@ df = df.dropna(subset=['Year', 'Depth'])
 df['Depth'] = pd.to_numeric(df['Depth'], errors='coerce')
 
 
+slope, intercept = np.polyfit(df['Year'], df['Depth'], 1)
+print(f"Linear Regression Slope: {slope:.4f}")
+print(f"Linear Regression Intercept: {intercept:.4f}")
+
+x_vals = np.linspace(df['Year'].min(), df['Year'].max(), 100)
+y_vals = intercept + slope * x_vals
+plt.plot(x_vals, y_vals, color='cyan', linestyle='--', label='Linear Regression Line')
+
 plt.hexbin(df['Year'], df['Depth'], gridsize=50, cmap='inferno_r')
+plt.colorbar(label='Density')
+plt.xlabel('Year')
+plt.ylabel('Well Depth (m)')
+plt.title('Well Depth in Relation to Time for the Seymour Aquifer')
 
 plt.show()
