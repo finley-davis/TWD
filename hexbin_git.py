@@ -19,17 +19,27 @@ df['Year'] = pd.to_datetime(df['Date'], format='%m/%d/%Y', errors='coerce').dt.y
 df = df.dropna(subset=['Year', 'Depth'])
 df['Depth'] = pd.to_numeric(df['Depth'], errors='coerce')
 
-
+#slope and intercept for linear regression
 slope, intercept = np.polyfit(df['Year'], df['Depth'], 1)
+#printing out the slope and intercept in the terminal
 print(f"Linear Regression Slope: {slope:.4f}")
 print(f"Linear Regression Intercept: {intercept:.4f}")
 
+#plotting the data
+#x values are the years, y values are the depths
 x_vals = np.linspace(df['Year'].min(), df['Year'].max(), 100)
 y_vals = intercept + slope * x_vals
+#plotting the linear regression line
+#color is cyan, linestyle is dashed, label is the name of the line
 plt.plot(x_vals, y_vals, color='cyan', linestyle='--', label='Linear Regression Line')
 
+#plots hexbin plot for year and depth
+#gridsize is the number of hexagons in the x direction
+#colormap is inferno reversed, with the _r making its color from light to dark
 plt.hexbin(df['Year'], df['Depth'], gridsize=50, cmap='inferno_r')
+#adding a colorbar to the plot to show concentration of data
 plt.colorbar(label='Density')
+#labels
 plt.xlabel('Year')
 plt.ylabel('Well Depth (m)')
 plt.title('Well Depth in Relation to Time for the Seymour Aquifer')
