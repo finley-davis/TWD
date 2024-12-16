@@ -4,18 +4,20 @@ import matplotlib.pyplot as plt
 
 
 #entered year for x-axis values
-start_year = 2000
+start_year = 1950
 end_year = 2020
 
 #reading in data 
-df = pd.read_csv('/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards (Balcones Fault Zone) Aquifer.csv')
+df = pd.read_csv('/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv')
 
 #renaming data based on columns
 df.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5', 'Lat', 'Long',
-              'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 'Unnamed16']#, 'Unnamed17', 'Unnamed18']
+              'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 'Unnamed16', 'Unnamed17', 'Unnamed18']
 
 #dropping unnecessary columns
 df['Year'] = pd.to_datetime(df['Date'], format='%Y', errors='coerce').dt.year
+
+df = df[(df['Year'] >= start_year) & (df['Year'] <= end_year)]
 df = df.dropna(subset=['Year', 'Depth'])
 df['Depth'] = pd.to_numeric(df['Depth'], errors='coerce')
 
