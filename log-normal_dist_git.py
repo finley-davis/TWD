@@ -8,7 +8,6 @@ start_year = 1930
 end_year = 1935
 
 
-
 #load in file path
 file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
 df = pd.read_csv(file_path)
@@ -20,7 +19,7 @@ df.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5
 
 #convert date column to datetime object
 #this means these values are being converted to dates and can be manipulated as dates instead of text strings
-df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
+df['Date'] = pd.to_datetime(df['Date'], format='%Y', errors='coerce')
 
 #commenting out this below line since there are not any invalid dates
 #this would be used for an unflitered dataset
@@ -47,6 +46,7 @@ df = df[(df['Date'].dt.year >= start_year) & (df['Date'].dt.year <= end_year)]
 df['Depth'] = pd.to_numeric(df['Depth'], errors='coerce')
 #drop rows with NaN values in the depth column
 df = df.dropna(subset=['Depth'])
+
 
 #log normal distribution equation, just for notes
 #Log normal dist - X = e^(\mu + \sigma * Z) where Z is a standard normal variable
@@ -88,7 +88,7 @@ plt.text(0.95, 0.95, textstr, transform=plt.gca().transAxes, fontsize=12,
 #plotting the lognormal distribution function
 plt.plot(x, pdf, 'r', linewidth=2)
 #labels
-plt.title(f'Lognormal Distribution of Depth Data ({start_year}-{end_year})')
+plt.title(f'Ogallala Lognormal Distribution of Depth Data ({start_year}-{end_year})')
 plt.xlabel('Depth')
 plt.ylabel('Density')
 plt.legend(['Lognormal PDF', 'Depth Data Histogram'])
