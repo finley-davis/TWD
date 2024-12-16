@@ -8,7 +8,7 @@ start_year = 2000
 end_year = 2020
 
 #load in csv file
-file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/TWD Ogallala Excel CSV_parsed_datesorted.csv'
+file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
 #read file path to data variable
 data = pd.read_csv(file_path)
 
@@ -17,7 +17,7 @@ data.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unname
                 'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 'Unnamed16', 'Unnnamed17', 'Unnamed18']
 
 #convert date column to datetime object
-data['Date'] = pd.to_datetime(data['Date'], format='%m/%d/%Y', errors='coerce')
+data['Date'] = pd.to_datetime(data['Date'], format='%Y', errors='coerce')
 
 #drops rows with no date or depth (just a reassurance that there are no errors in the pre-filtered data)
 data = data.dropna(subset=['Date', 'Depth'])
@@ -34,7 +34,7 @@ model = "l2"  #cost function, chose 'l2' for depth trends
 #can replace pelt with Binseg
 #10 or less change points
 algo = rpt.Pelt(model=model).fit(signal)
-breakpoints = algo.predict(pen=500000)  
+breakpoints = algo.predict(pen=50)  
 
 #plot results with change points marked
 plt.figure(figsize=(12, 6))
