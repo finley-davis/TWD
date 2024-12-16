@@ -50,8 +50,7 @@ df = df.dropna(subset=['Depth'])
 
 #log normal distribution equation, just for notes
 #Log normal dist - X = e^(\mu + \sigma * Z) where Z is a standard normal variable
-
-#giving the data to the lognormal distribution
+#giving the data to the lognormal distsribution
 depth_data = df['Depth'].values
 #this is converting the data to log space
 log_depth = np.log(depth_data)
