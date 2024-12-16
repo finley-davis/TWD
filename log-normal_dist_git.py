@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 start_year = 1900
 end_year = 2000
 
-row_count = 0
+
 
 #load in file path
 file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/TWD Ogallala Excel CSV_parsed_datesorted_corrected.csv'
