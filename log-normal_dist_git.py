@@ -4,14 +4,13 @@ from scipy.stats import lognorm
 import matplotlib.pyplot as plt
 
 #input parameters (years to filter data)
-start_year = 1900
-end_year = 2000
+start_year = 1930
+end_year = 1935
 
 
 
 #load in file path
-file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/TWD Ogallala Excel CSV_parsed_datesorted_corrected.csv'
-#read file path to dataframe variable
+file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
 df = pd.read_csv(file_path)
 
 #rename columns based on csv file
@@ -67,7 +66,7 @@ print(textstr)
 #giving the x variable to the lognormal distribution
 x = np.linspace(min(depth_data), max(depth_data), 100)
 #this is the lognormal distribution function
-pdf = lognorm.pdf(x, s=sigma, scale=np.exp(mu))  
+pdf = lognorm.pdf(x, s=sigma, scale=np.exp(mu))
 
 #plotting the data
 plt.figure(figsize=(10, 6))
