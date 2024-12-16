@@ -3,8 +3,9 @@ import seaborn as sns
 import pandas as pd
 
 #year range, this can be changed based on what years you want to look at
+#this is meant to be a 5 year interval
 start_year = 2005
-end_year = 2010
+end_year = 2020
 
 #loading in CSV file
 file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
@@ -35,16 +36,17 @@ def plot_violin(start_year, end_year):
 
     #plot violin plot for each bin
     plt.figure(figsize=(12, 8))
-    sns.violinplot(x='Year_Bin', y='Depth', data=data, palette='muted', inner='point')
+    sns.violinplot(x='Year_Bin', y='Depth', data=data, palette='muted') #inner='point')
+    sns.stripplot(x='Year_Bin', y='Depth', data=data, color='black', size=3, jitter=True, alpha=0.7)
 
     #labeling the graph
-    plt.title(f'Violin Plots for 5-Year Intervals ({start_year}-{end_year})')
+    plt.title(f'Ogallala Violin Plots for 5-Year Intervals ({start_year}-{end_year})')
     plt.xlabel('Year Interval')
     plt.ylabel('Depth')
     plt.xticks(rotation=45)
     plt.tight_layout()
     plt.show()
 
-
+#running the function
 if __name__ == "__main__":
    plot_violin(start_year, end_year)
