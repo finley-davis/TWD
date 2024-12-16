@@ -88,3 +88,8 @@ plot_theil_sen_regression(intervals, median_depths.values)
 #shows legend and plot
 plt.legend()
 plt.show()
+
+
+#checking depths with print statemete
+#this is just trouble shooting
+#print(data.head(100))  #prints the first 100 rows
