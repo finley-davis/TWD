@@ -17,8 +17,11 @@ df.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5
 #dropping unnecessary columns
 df['Year'] = pd.to_datetime(df['Date'], format='%Y', errors='coerce').dt.year
 
+#filtering data based on start and end year selected above
 df = df[(df['Year'] >= start_year) & (df['Year'] <= end_year)]
+#this will drop the rows that have no values in the year and depth columns, just to clean up the data
 df = df.dropna(subset=['Year', 'Depth'])
+#this makes the year column an integer, as it was a float before
 df['Depth'] = pd.to_numeric(df['Depth'], errors='coerce')
 
 #slope and intercept for linear regression
