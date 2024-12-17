@@ -2,9 +2,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 #entered year for x-axis values
-start_year = 1950
+start_year = 1930
 end_year = 2020
 
 #reading in data 
@@ -47,6 +46,6 @@ plt.colorbar(label='Density')
 #labels
 plt.xlabel('Year')
 plt.ylabel('Well Depth (m)')
-plt.title('Well Depth in Relation to Time for the Seymour Aquifer')
+plt.title('Well Depth in Relation to Time for the Ogallala Aquifer')
 
 plt.show()

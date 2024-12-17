@@ -66,6 +66,27 @@ print(textstr)
 x = np.linspace(min(depth_data), max(depth_data), 100)
 #this is the lognormal distribution function
 pdf = lognorm.pdf(x, s=sigma, scale=np.exp(mu))
+#notes from copilot on the above two lines of code
+"""
+Line 1: Creating the x variable
+Purpose: This line generates an array of 100 evenly spaced values between the minimum and maximum values of depth_data.
+Components:
+np.linspace(start, stop, num): A NumPy function that returns num evenly spaced samples, calculated over the interval [start, stop].
+min(depth_data): Finds the minimum value in the depth_data array.
+max(depth_data): Finds the maximum value in the depth_data array.
+100: Specifies the number of samples to generate.
+Line 2: Calculating the Lognormal Distribution PDF
+Purpose: This line calculates the probability density function (PDF) of the lognormal distribution for the values in x.
+Components:
+lognorm.pdf(x, s, scale): A SciPy function that computes the PDF of the lognormal distribution at each value in x.
+x: The array of values where the PDF is evaluated.
+s=sigma: The shape parameter (standard deviation of the underlying normal distribution).
+scale=np.exp(mu): The scale parameter, which is the exponential of the mean (mu) of the underlying normal distribution.
+Summary
+The first line generates a range of values (x) based on the data in depth_data.
+The second line calculates the lognormal distribution's PDF for these values using specified parameters (sigma and mu).
+This setup is typically used to visualize or analyze the distribution of data that follows a lognormal distribution.
+"""
 
 #plotting the data
 plt.figure(figsize=(10, 6))
@@ -75,20 +96,22 @@ plt.figure(figsize=(10, 6))
 #alpha - the frequency of the data in each bin is plotted
 plt.hist(depth_data, bins=20, density=True, alpha=0.6, color='b', edgecolor='black')
 #x is the x variable r is the color of the line
-#pdf is the lognormal distribution function
+
+
 #linewidth is the width of the line
 #adding a vertical line for the mean of the depth data
-plt.axvline(x=np.exp(mu), color='g', linestyle='--', linewidth=2, label='Mean Depth')
+plt.axvline(x=np.exp(mu), color='g', linestyle='--', linewidth=2, label='Mean Depth') #geometric mean of the data, accounts for skewed data
 
 #adding text box with mu and sigma values
 props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 plt.text(0.95, 0.95, textstr, transform=plt.gca().transAxes, fontsize=12,
          verticalalignment='top', horizontalalignment='right', bbox=props)
 #plotting the lognormal distribution function
-plt.plot(x, pdf, 'r', linewidth=2)
+plt.plot(x, pdf, 'r', linewidth=2) #peak is most likely value, most common well depth
 #labels
 plt.title(f'Ogallala Lognormal Distribution of Depth Data ({start_year}-{end_year})')
 plt.xlabel('Depth')
 plt.ylabel('Density')
 plt.legend(['Lognormal PDF', 'Depth Data Histogram'])
 plt.show()
+
