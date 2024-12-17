@@ -58,7 +58,7 @@ plt.xticks(ticks=intervals, labels=intervals, rotation=45)
 #labeling the x-axis, y-axis, and title
 plt.xlabel('5-Year Intervals')
 plt.ylabel('Depth')
-plt.title('Well Depth Distribution by 5-Year Intervals of the Trinity Aquifer with Theil-Sen Trend Line')
+plt.title('Well Depth Distribution by 5-Year Intervals of the Ogallala Aquifer with Theil-Sen Trend Line')
 
 #This is the median line
 #color = 'blue' means that the line will be blue
