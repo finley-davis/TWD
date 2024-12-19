@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 #load Texas shapefile that I downloaded from https://github.com/johan/world.geo.json/blob/master/countries.geo.json
 texas = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Python/Texas_Map/TX.geo.json')
 
-# Create a GeoDataFrame for points
+#create a GeoDataFrame for points
 from shapely.geometry import Point
 
 #Ogallala points
@@ -79,5 +79,5 @@ plt.ylabel("Latitude")
 plt.legend(title="Aquifer Well Points", labels=["Ogallala Aquifer", "Edwards (Balcones Fault Zone) Aquifer", "Edwards-Trinity Plateau Aquifer",
             "Carrizo-Wilcox Aquifer", "Gulf Coast Aquifer", "Pecos Valley Aquifer", "Seymour Aquifer",
             "Trinity Aquifer", "Hueco-Mesilla Basin Aquifer"])
-plt.title("Map of Texas with Points")
+plt.title("Map of Texas with Well Points Delineated by Aquifer")
 plt.show()
