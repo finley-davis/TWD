@@ -4,7 +4,7 @@ import pandas as pd
 
 #year range, this can be changed based on what years you want to look at
 #this is meant to be a 5 year interval
-start_year = 2005
+start_year = 1930
 end_year = 2020
 
 #loading in CSV file
