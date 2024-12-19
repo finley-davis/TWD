@@ -36,8 +36,8 @@ def plot_violin(start_year, end_year):
 
     #plot violin plot for each bin
     plt.figure(figsize=(12, 8))
-    sns.violinplot(x='Year_Bin', y='Depth', data=data, palette='muted') #inner='point')
-    sns.stripplot(x='Year_Bin', y='Depth', data=data, color='black', size=3, jitter=True, alpha=0.7)
+    sns.violinplot(x = 'Year_Bin', y = 'Depth', data = data, color = 'red') #inner='point')
+    #sns.stripplot(x='Year_Bin', y='Depth', data=data, color='black', size=3, jitter=True, alpha=0.7)
 
     #labeling the graph
     plt.title(f'Ogallala Violin Plots for 5-Year Intervals ({start_year}-{end_year})')
