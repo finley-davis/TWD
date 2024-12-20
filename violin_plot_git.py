@@ -7,6 +7,7 @@ import pandas as pd
 start_year = 1930
 end_year = 2020
 
+
 #loading in CSV file
 file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
 #read file path to data variable
@@ -36,7 +37,16 @@ def plot_violin(start_year, end_year):
 
     #plot violin plot for each bin
     plt.figure(figsize=(12, 8))
-    sns.violinplot(x = 'Year_Bin', y = 'Depth', data = data, color = 'red') #inner='point')
+    sns.violinplot(x='Year_Bin', y='Depth', data=data, color='red', inner=None)
+    sns.boxplot(
+        x='Year_Bin', 
+        y='Depth', 
+        data=data, 
+        width=0.05,  
+        showcaps=False, 
+        boxprops={'facecolor': 'white', 'edgecolor': 'black'}, 
+        whiskerprops={'linewidth': 1, 'color': 'black'}, 
+        zorder=2)
     #sns.stripplot(x='Year_Bin', y='Depth', data=data, color='black', size=3, jitter=True, alpha=0.7)
 
     #labeling the graph
@@ -50,3 +60,4 @@ def plot_violin(start_year, end_year):
 #running the function
 if __name__ == "__main__":
    plot_violin(start_year, end_year)
+

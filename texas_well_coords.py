@@ -64,11 +64,11 @@ carrizowilcox_points.plot(ax=ax, color='green', markersize=5)
 #then Gulf Coast in blue
 gulfcoast_points.plot(ax=ax, color='blue', markersize=5)
 #then Pecos Valley in purple
-pecosvalley_points.plot(ax=ax, color='purple', markersize=5)
+pecosvalley_points.plot(ax=ax, color='indigo', markersize=5)
 #then Seymour in indigo
-seymour_points.plot(ax=ax, color='indigo', markersize=5)
+seymour_points.plot(ax=ax, color='violet', markersize=5)
 #then Trinity in violet
-trinity_points.plot(ax=ax, color='violet', markersize=5)
+trinity_points.plot(ax=ax, color='magenta', markersize=5)
 #then Hueco-Mesilla Basin in pink
 hmb_points.plot(ax=ax, color='pink', markersize=5)
 
