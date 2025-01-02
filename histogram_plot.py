@@ -9,7 +9,7 @@ from scipy.stats import lognorm
 import matplotlib.pyplot as plt
 
 #set the start and end year for the data
-start_year = 1930
+start_year = 1920
 end_year = 2020
 
 #file path for the csv file
