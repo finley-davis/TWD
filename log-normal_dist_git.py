@@ -15,7 +15,7 @@ df = pd.read_csv(file_path)
 #rename columns based on csv file
 df.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5', 'Lat', 'Long',
               'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 
-              'Unnamed16', 'Unnamed17', 'Unnamed18']
+              'Unnamed16']
 
 #convert date column to datetime object
 #this means these values are being converted to dates and can be manipulated as dates instead of text strings
@@ -94,19 +94,21 @@ plt.figure(figsize=(10, 6))
 #bins refers to number of divisions used to group the histogram data
 #density is the density of the data
 #alpha - the frequency of the data in each bin is plotted
-plt.hist(depth_data, bins=20, density=True, alpha=0.6, color='b', edgecolor='black')
+plt.hist(depth_data, bins=20, density=True, alpha=0.6, color='b', edgecolor='black') #orientation = 'horizontal' is for horizontal setting
 #x is the x variable r is the color of the line
 
 
 #linewidth is the width of the line
 #adding a vertical line for the mean of the depth data
 plt.axvline(x=np.exp(mu), color='g', linestyle='--', linewidth=2, label='Mean Depth') #geometric mean of the data, accounts for skewed data
+#plt.axhline(x=np.exp(mu), color='g', linestyle='--', linewidth=2, label='Mean Depth') #this is for horizontal setting
 
 #adding text box with mu and sigma values
 props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 plt.text(0.95, 0.95, textstr, transform=plt.gca().transAxes, fontsize=12,
          verticalalignment='top', horizontalalignment='right', bbox=props)
 #plotting the lognormal distribution function
+#switch x and pdf for horizontal plot
 plt.plot(x, pdf, 'r', linewidth=2) #peak is most likely value, most common well depth
 #labels
 plt.title(f'Ogallala Lognormal Distribution of Depth Data ({start_year}-{end_year})')

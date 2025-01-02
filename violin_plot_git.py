@@ -9,13 +9,13 @@ end_year = 2020
 
 
 #loading in CSV file
-file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
+file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Hueco-Mesilla Basin.csv'
 #read file path to data variable
 data = pd.read_csv(file_path)
 
 #rename columns based on CSV file, may have to change based on CSV file
 data.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5', 'Lat', 'Long',
-                'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 'Unnamed16', 'Unnamed17', 'Unnamed18']
+                'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 'Unnamed16']
 
 #convert date column to datetime object
 data['Date'] = pd.to_datetime(data['Date'], format='%Y', errors='coerce')
@@ -37,7 +37,7 @@ def plot_violin(start_year, end_year):
 
     #plot violin plot for each bin
     plt.figure(figsize=(12, 8))
-    sns.violinplot(x='Year_Bin', y='Depth', data=data, color='red', inner=None)
+    sns.violinplot(x='Year_Bin', y='Depth', data=data, color='pink', inner=None, width = 3.0)
     sns.boxplot(
         x='Year_Bin', 
         y='Depth', 
@@ -49,8 +49,8 @@ def plot_violin(start_year, end_year):
         zorder=2)
     #sns.stripplot(x='Year_Bin', y='Depth', data=data, color='black', size=3, jitter=True, alpha=0.7)
 
-    #labeling the graph
-    plt.title(f'Ogallala Violin Plots for 5-Year Intervals ({start_year}-{end_year})')
+    #labeling the graphs
+    plt.title(f'Hueco-Mesilla Basin Aquifer Violin Plots for 5-Year Intervals ({start_year}-{end_year})')
     plt.xlabel('Year Interval')
     plt.ylabel('Depth')
     plt.xticks(rotation=45)

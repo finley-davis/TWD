@@ -48,7 +48,7 @@ hmb_points = gpd.GeoDataFrame(geometry=[Point(x[1], x[0]) for x in hmb_coordinat
 
 
 
-# Plot the map
+#plots map of Texas
 fig, ax = plt.subplots(figsize=(10, 10))
 texas.plot(ax=ax, color='lightblue', edgecolor='black')
 
