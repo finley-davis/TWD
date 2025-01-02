@@ -110,8 +110,8 @@ for i, year_bin in enumerate(year_bins):
         #add mean depth line
         mean_depth = np.exp(mu)
         plt.axhline(y=mean_depth, xmin=(i-0.4)/len(year_bins), 
-                   xmax=(i+0.4)/len(year_bins), 
-                   color='g', linestyle='--', linewidth=2)
+               xmax=(i+0.4)/len(year_bins), 
+               color='g', linestyle='--', linewidth=2)
         """
 
 #setting title of the plot
@@ -119,13 +119,13 @@ plt.title('Ogallala Aquifer Depth Distribution with Lognormal Fit (1930-2020)', 
 #setting x-axis label
 plt.xlabel('Year Interval')
 #setting y-axis label
-plt.ylabel('Depth')
+plt.ylabel('Depth (ft)')
 
 #setting x-axis ticks, which are the year bins
 plt.xticks(x_positions, year_bins, rotation=45, ha='right')
 
 #adding a grid to the y-axis, which is the depth axis
-plt.grid(True, axis='y', linestyle='--', alpha=0.7)
+plt.grid(True, axis='y', linestyle='--')
 
 #adding a legend
 #plt.plot([], [], 'r', linewidth=2, label='Lognormal PD#F')

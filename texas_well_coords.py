@@ -7,6 +7,33 @@ texas = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Python/Texas
 #create a GeoDataFrame for points
 from shapely.geometry import Point
 
+"""
+aquifer_pathname = {'Ogallala': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv',
+                    'Edwards (Balcones Fault Zone)': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards (Balcones Fault Zone) Aquifer.csv',
+                    'Edwards-Trinity Plateau': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards-Trinity Plateau.csv',
+                    'Carrizo-Wilcox': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Carrizo-Wilcox.csv',
+                    'Gulf Coast': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Gulf Coast.csv',
+                    'Pecos Valley': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Pecos Valley.csv',
+                    'Seymour': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Seymour.csv',
+                    'Trinity': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Trinity.csv',
+                    'Hueco-Mesilla Basin': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Hueco-Mesilla Basin.csv'
+                    }
+
+
+aquifers = {'Ogallala': 'red',
+            'Edwards (Balcones Fault Zone)': 'orange', 
+            'Edwards-Trinity Plateau': 'yellow',
+            'Carrizo-Wilcox': 'green',
+            'Gulf Coast': 'blue',
+            'Pecos Valley': 'indigo',
+            'Seymour': 'violet',
+            'Trinity': 'magenta',
+            'Hueco-Mesilla Basin': 'pink'
+            }
+"""
+            
+
+
 #Ogallala points
 ogallala = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv')
 ogallala_coordinates = ogallala.iloc[:, [6, 7]].values
