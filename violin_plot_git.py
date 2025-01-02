@@ -37,7 +37,7 @@ def plot_violin(start_year, end_year):
 
     #plot violin plot for each bin
     plt.figure(figsize=(12, 8))
-    sns.violinplot(x='Year_Bin', y='Depth', data=data, color='pink', inner=None, width = 3.0)
+    sns.violinplot(x='Year_Bin', y='Depth', data=data, color='pink', inner=None, width = 3.0) #width will change how wide the violin plot is
     sns.boxplot(
         x='Year_Bin', 
         y='Depth', 
