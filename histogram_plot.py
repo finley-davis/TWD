@@ -104,6 +104,8 @@ for i, year_bin in enumerate(year_bins):
         #plot the pdf on the right side
         plt.plot(i + pdf, y_points, 'black', linewidth=2)
         
+        #i've kept this in from the original code histogram plot code (which is one graph for a 5 year period)
+        #but it's not necessary and makes the graph look weird
         """
         #add mean depth line
         mean_depth = np.exp(mu)
