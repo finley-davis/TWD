@@ -36,7 +36,6 @@ plt.figure(figsize=(15, 10))
 year_bins = sorted([bin for bin in df['Year_Bin'].unique() if not pd.isna(bin)])
 x_positions = np.arange(len(year_bins))
 
-
 max_depth = df['Depth'].max()
 min_depth = df['Depth'].min()
 bin_edges = np.linspace(min_depth, max_depth, 50)  
@@ -49,10 +48,10 @@ for i, year_bin in enumerate(year_bins):
     hist = hist / hist.max() * 0.4 
 
     plt.barh(bin_edges[:-1], -hist, height=np.diff(bin_edges), 
-             left=i, alpha=0.6, color='skyblue')
+             left=i, alpha=0.6, color='red')
 
     plt.barh(bin_edges[:-1], hist, height=np.diff(bin_edges), 
-             left=i, alpha=0.6, color='skyblue')
+             left=i, alpha=0.6, color='red')
 
 plt.title('Ogallala Aquifer Depth Distribution (1930-2020)', pad=20)
 plt.xlabel('Year Interval')
