@@ -33,7 +33,6 @@ aquifers = {'Ogallala': 'red',
 """
             
 
-
 #Ogallala points
 ogallala = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv')
 ogallala_coordinates = ogallala.iloc[:, [6, 7]].values
@@ -72,9 +71,6 @@ hmb_coordinates = hmb.iloc[:, [6, 7]].values
 hmb_points = gpd.GeoDataFrame(geometry=[Point(x[1], x[0]) for x in hmb_coordinates], crs="EPSG:4326")
 
 
-
-
-
 #plots map of Texas
 fig, ax = plt.subplots(figsize=(10, 10))
 texas.plot(ax=ax, color='lightblue', edgecolor='black')
@@ -102,7 +98,8 @@ hmb_points.plot(ax=ax, color='pink', markersize=5)
 
 plt.xlabel("Longitude")
 plt.ylabel("Latitude")
-
+plt.grid()
+plt.tight_layout()
 plt.legend(title="Aquifer Well Points", labels=["Ogallala Aquifer", "Edwards (Balcones Fault Zone) Aquifer", "Edwards-Trinity Plateau Aquifer",
             "Carrizo-Wilcox Aquifer", "Gulf Coast Aquifer", "Pecos Valley Aquifer", "Seymour Aquifer",
             "Trinity Aquifer", "Hueco-Mesilla Basin Aquifer"])

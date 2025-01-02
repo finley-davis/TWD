@@ -114,6 +114,14 @@ for i, year_bin in enumerate(year_bins):
                color='g', linestyle='--', linewidth=2)
         """
 
+#theil-sen line
+#calculating the median of the depth data
+median_depth = df['Depth'].median()
+lognorm_median = np.exp(df['Depth'].apply(np.log).median())
+#plotting the median depth line
+plt.axhline(y=median_depth, color='b', linestyle='--', linewidth=2, label='Median Depth')
+
+
 #setting title of the plot
 plt.title('Ogallala Aquifer Depth Distribution with Lognormal Fit (1930-2020)', pad=20)
 #setting x-axis label

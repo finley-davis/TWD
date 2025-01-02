@@ -66,7 +66,8 @@ print(textstr)
 x = np.linspace(min(depth_data), max(depth_data), 100)
 #this is the lognormal distribution function
 pdf = lognorm.pdf(x, s=sigma, scale=np.exp(mu))
-#notes from copilot on the above two lines of code
+
+
 """
 Line 1: Creating the x variable
 Purpose: This line generates an array of 100 evenly spaced values between the minimum and maximum values of depth_data.
