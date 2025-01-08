@@ -33,6 +33,9 @@ aquifers = {'Ogallala': 'red',
 """
             
 
+
+#planning on developing the below section into a for loop to iterate through the different aquifers
+
 #Ogallala points
 ogallala = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv')
 ogallala_coordinates = ogallala.iloc[:, [6, 7]].values
