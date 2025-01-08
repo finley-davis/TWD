@@ -77,23 +77,23 @@ texas.plot(ax=ax, color='lightblue', edgecolor='black')
 
 #plots aquifer points
 #starts with Ogallala in red
-ogallala_points.plot(ax=ax, color='red', markersize=5)
+ogallala_points.plot(ax=ax, color='red', markersize = 0.1)
 #then Edwards (Balcones Fault Zone) in orange
-edwardsbfz_points.plot(ax=ax, color='orange', markersize=5)
+edwardsbfz_points.plot(ax=ax, color='orange', markersize = 0.1)
 #then Edwards-Trinity Plateau in yellow
-edwardstp_points.plot(ax=ax, color='yellow', markersize=5)
+edwardstp_points.plot(ax=ax, color='yellow', markersize = 0.1)
 #then Carrizo-Wilcox in green
-carrizowilcox_points.plot(ax=ax, color='green', markersize=5)
+carrizowilcox_points.plot(ax=ax, color='green', markersize = 0.1)
 #then Gulf Coast in blue
-gulfcoast_points.plot(ax=ax, color='blue', markersize=5)
+gulfcoast_points.plot(ax=ax, color='blue', markersize = 0.1)
 #then Pecos Valley in purple
-pecosvalley_points.plot(ax=ax, color='indigo', markersize=5)
+pecosvalley_points.plot(ax=ax, color='indigo', markersize = 0.1)
 #then Seymour in indigo
-seymour_points.plot(ax=ax, color='violet', markersize=5)
+seymour_points.plot(ax=ax, color='violet', markersize = 0.1)
 #then Trinity in violet
-trinity_points.plot(ax=ax, color='magenta', markersize=5)
+trinity_points.plot(ax=ax, color='magenta', markersize = 0.1)
 #then Hueco-Mesilla Basin in pink
-hmb_points.plot(ax=ax, color='pink', markersize=5)
+hmb_points.plot(ax=ax, color='pink', markersize = 0.1)
 
 
 plt.xlabel("Longitude")
@@ -102,7 +102,7 @@ plt.grid()
 plt.tight_layout()
 plt.legend(title="Aquifer Well Points", labels=["Ogallala Aquifer", "Edwards (Balcones Fault Zone) Aquifer", "Edwards-Trinity Plateau Aquifer",
             "Carrizo-Wilcox Aquifer", "Gulf Coast Aquifer", "Pecos Valley Aquifer", "Seymour Aquifer",
-            "Trinity Aquifer", "Hueco-Mesilla Basin Aquifer"])
+            "Trinity Aquifer", "Hueco-Mesilla Basin Aquifer"], markerscale = 10)
 plt.title("Map of Texas with Well Points Delineated by Aquifer")
 plt.show()
 
