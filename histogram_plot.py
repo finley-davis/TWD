@@ -103,6 +103,13 @@ for i, year_bin in enumerate(year_bins):
         plt.plot(i - pdf, y_points, 'black', linewidth=2)
         #plot the pdf on the right side
         plt.plot(i + pdf, y_points, 'black', linewidth=2)
+
+        #mean depth annotation
+        mu_annotation = f'μ = {mu:.2f}'
+        sigma_annotation = f'σ = {sigma:.2f}'
+        plt.text(i, max_depth + 15, mu_annotation, ha='center', fontsize=7.5, color='blue')
+        plt.text(i, max_depth + 1, sigma_annotation, ha='center', fontsize=7.5, color='purple')
+
         
         #i've kept this in from the original code histogram plot code (which is one graph for a 5 year period)
         #but it's not necessary and makes the graph look weird
@@ -119,7 +126,7 @@ for i, year_bin in enumerate(year_bins):
 median_depth = df['Depth'].median()
 lognorm_median = np.exp(df['Depth'].apply(np.log).median())
 #plotting the median depth line
-plt.axhline(y=median_depth, color='b', linestyle='--', linewidth=2, label='Median Depth')
+#plt.axhline(y=median_depth, color='b', linestyle='--', linewidth=2, label='Median Depth')
 
 
 #setting title of the plot

@@ -21,6 +21,8 @@ aquifers = {
         'color': 'red',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
     },
+}
+"""
     'Edwards (Balcones Fault Zone)': {
         'color': 'orange',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards (Balcones Fault Zone) Aquifer.csv'
@@ -54,6 +56,7 @@ aquifers = {
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Hueco-Mesilla Basin.csv'
     }
 }
+"""
 #experimenting w/ ogallala aquifer data
 
 #function that loads and processes aquifer data
@@ -205,6 +208,3 @@ plt.tight_layout()
 
 #show the 3d plot
 plt.show()
-
-
-
