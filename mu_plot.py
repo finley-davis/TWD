@@ -7,6 +7,8 @@ start_year = 1920
 end_year = 2020
 
 file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
+
+
 df = pd.read_csv(file_path)
 
 df.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5', 'Lat', 'Long',
@@ -52,7 +54,6 @@ for i, year_bin in enumerate(year_bins):
         plt.plot([x_positions[i] - 0.4, x_positions[i] + 0.4], [mu_depth, mu_depth], color='black', linestyle='-', linewidth=2)
         plt.text(x_positions[i], mu_depth + 5, f'mu = {mu_depth:.2f}', ha='center', color='black', fontsize=7.5)
         
-
 
 plt.ylim(0, max_depth)
 x_mu, y_mu = zip(*mu_values)
