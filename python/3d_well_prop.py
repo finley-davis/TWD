@@ -80,7 +80,7 @@ def load_aquifer_data(filepath):
     return df  #return the processed dataframe
 
 #load data for the ogallala aquifer
-df = load_aquifer_data(aquifers['Ogallala']['path'])
+df = load_aquifer_data(aquifers['Edwards-Trinity Plateau']['path'])
 
 #create figure and 3d axes
 fig = plt.figure(figsize=(15, 12))  # create a figure
@@ -92,7 +92,7 @@ texas = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Python/Texas
 # setup colormap
 year_bins = sorted(df['Year_Bin'].dropna().unique())  # drop NaNs and sort bins
 norm = Normalize(vmin=0, vmax=len(year_bins) - 1)  # normalize bin indices
-cmap = get_cmap('Reds')  # define colormap
+cmap = get_cmap('YlOrBr')  # define colormap
 
 #adding image to 
 logo_path = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Ogallala_depth_analysis.png'
@@ -156,7 +156,7 @@ plt.show()  #show the plot
 writer = FFMpegWriter(fps=3, metadata={'title': 'Texas Aquifer Animation'}, bitrate=1800)
 
 #save the animation
-output_path = "/Users/finleydavis/Desktop/aquifer_animation.mp4"
+output_path = '/Users/finleydavis/Desktop/EdwardsTP_aquifer_animation.mp4'
 ani.save(output_path, writer=writer)
 
 print(f"Animation saved as {output_path}")
