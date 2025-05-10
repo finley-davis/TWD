@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Texas Well Depth Project</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      color: #2c2c2c;
+    }
+
+    header {
+      background-color: #bf5700; /* UT Austin Burnt Orange */
+      color: white;
+      padding: 1.5rem 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      margin-top: 0.5rem;
+      font-weight: 300;
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    h2 {
+      color: #bf5700;
+      font-size: 1.5rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 0.5rem;
+    }
+
+    video {
+      width: 100%;
+      max-height: 600px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Texas Well Depth Project</h1>
+    <div class="subtitle">Geosciences Visualization of Aquifer Well Depths</div>
+  </header>
+
+  <main>
+    <section>
+      <h2>Project Overview</h2>
+      <p>
+        This project visualizes groundwater well depths across major Texas aquifers over time using 3D geospatial animations.
+        Each animation represents a different aquifer system, helping to highlight spatial and temporal patterns in groundwater depth.
+      </p>
+    </section>
+
+    <section>
+      <h2>3D Aquifer Animations</h2>
+
+      <h3>Ogallala Aquifer</h3>
+      <video controls>
+        <source src="/Users/finleydavis/Desktop/Cardenas Research/Animations/Ogallala/ogallala_aquifer_animation.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- Add more videos below as needed -->
+      <!--
+      <h3>Edwards (Balcones Fault Zone)</h3>
+      <video controls>
+        <source src="media/Edwards_animation.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+      -->
+
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 UT Austin Geosciences | Project by Finley Davis
+  </footer>
+</body>
+</html>
