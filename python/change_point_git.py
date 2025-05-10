@@ -18,7 +18,7 @@ aquifers = {
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards (Balcones Fault Zone) Aquifer.csv'
     },
     'Edwards-Trinity Plateau': {
-        'color': 'yellow',
+        'color': '#CC9900',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards-Trinity Plateau.csv'
     },
     'Carrizo-Wilcox': {
@@ -110,6 +110,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
 
     #calculating annual lognormal means
     def lognormal_mean(x):
+        if len(x) == 1:
+            return x.iloc[0]
         log_x = np.log(x)
         return np.exp(log_x.mean() + 0.5 * log_x.std() ** 2)
 
@@ -250,9 +252,9 @@ for aquifer_name, properties in aquifers.items():
     # Call the function for each aquifer
     analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020, output_folder=output_folder)
 """
-analyze_aquifer_data(file_path = aquifers['Ogallala']['path'], 
-                    aquifer_name = 'Ogallala', 
+analyze_aquifer_data(file_path = aquifers['Hueco-Mesilla Basin']['path'], 
+                    aquifer_name = 'Hueco-Mesilla Basin', 
                     start_year=1920, 
                     end_year=2020, 
                     output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=[1968, 1987, 2020])
+                    manual_change_points=[1950, 2020])
