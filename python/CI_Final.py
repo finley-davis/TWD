@@ -44,6 +44,18 @@ aquifers = {
     }
 }
 
+aquifer_ylim = {
+    'Ogallala': (800, 0),
+    'Edwards (Balcones Fault Zone)': (2000, 0),
+    'Edwards-Trinity Plateau': (1000, 0),
+    'Carrizo-Wilcox': (1500, 0),
+    'Gulf Coast': (1500, 0),
+    'Pecos Valley': (1400, 0),
+    'Seymour': (300, 0),
+    'Trinity': (1500, 0),
+    'Hueco-Mesilla Basin': (1500, 0)
+}
+
 def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_folder=None):
     file_path = aquifers[aquifer_name]['path']
     aquifer_color = aquifers[aquifer_name]['color']
@@ -56,12 +68,15 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     df = df[(df.Date.between(start_date, end_date)) & (df.Depth > 0)].copy()
 
     def lognormal_mean(x):
+        if len(x) == 1:
+            return x.iloc[0]
         log_x = np.log(x)
         return np.exp(log_x.mean() + 0.5 * log_x.std() ** 2)
 
     annual_means = df.groupby('Date')['Depth'].agg(lognormal_mean).interpolate().reset_index()
     Dates = annual_means['Date'].values
     means = annual_means['Depth'].values
+    print(means)
 
 
     slope, intercept, _, _ = theilslopes(means, Dates, alpha=0.90)
@@ -88,13 +103,14 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
 
 
     fig, ax = plt.subplots(figsize=(16, 10))
-    ax.set_ylim(0, 1500)
+    ax.set_ylim(aquifer_ylim[aquifer_name])
     ax.scatter(df.Date, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis', label=f'Data Points (n={len(df):,})')
     ax.plot(Dates, means, 'ko-', markersize=4, label='Annual Lognormal Means', zorder=4)
     ax.plot(Dates, trend_line, '--', color=aquifer_color, label=f'Theil-Sen Trend (slope={slope:.2f})', zorder=5)
     ax.fill_between(Dates, lower_ci, upper_ci, alpha=0.3, color=aquifer_color, label='90% Bootstrap CI')
 
-    ax.invert_yaxis()
+
+    #ax.invert_yaxis()
     ax.set_title(f'{aquifer_name} Aquifer Depth Analysis: {start_date}-{end_date}\nTheil-Sen Trend with 90% Bootstrap CI', pad=20)
     ax.set_xlabel('Date')
     ax.set_ylabel('Depth (ft)')
@@ -106,14 +122,14 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
 
     if output_folder:
         os.makedirs(output_folder, exist_ok=True)
-        filename = f"{aquifer_name.replace(' ', '_').replace('(', '').replace(')', '').replace('-', '')}.pdf"
+        filename = f"{aquifer_name.replace(' ', '_').replace('(', '').replace(')', '').replace('-', 'v2')}.pdf"
         save_path = os.path.join(output_folder, filename)
         plt.savefig(save_path, dpi=300)
         print(f"Saved plot to: {save_path}")
     plt.close()
 #"""
-analyze_aquifer_data(file_path=aquifers['Trinity']['path'], 
-                    aquifer_name = 'Trinity', start_date = 1920, end_date = 2020, 
+analyze_aquifer_data(file_path=aquifers['Pecos Valley']['path'], 
+                    aquifer_name = 'Pecos Valley', start_date = 1920, end_date = 2020, 
                     output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Final Graphs/Confidence Interval')
 """
 # Run the function for all aquifers
