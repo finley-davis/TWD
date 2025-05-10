@@ -48,9 +48,23 @@ aquifers = {
     }
 }
 
-name = 'Ogallala'
+
+aquifer_ylim = {
+    'Ogallala': (800, 0),
+    'Edwards (Balcones Fault Zone)': (2000, 0),
+    'Edwards-Trinity Plateau': (1000, 0),
+    'Carrizo-Wilcox': (1500, 0),
+    'Gulf Coast': (1500, 0),
+    'Pecos Valley': (1400, 0),
+    'Seymour': (300, 0),
+    'Trinity': (1500, 0),
+    'Hueco-Mesilla Basin': (1500, 0)
+}
+
+
+#name = 'Ogallala'
 #file path, forget the color coding for this code
-file_path = aquifers[name]['path']
+#file_path = aquifers[name]['path']
 
 
 #perhaps change this to a rolling_bootstrap_theil_sen function?
@@ -166,15 +180,9 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
     ax.set_title(f'{aquifer_name} Aquifer Depth Analysis: {start_year}-{end_year}\nTheil-Sen Trend with 10% CI', pad=20)
     ax.set_xlabel('Year')
     ax.set_ylabel('Depth (ft)')
+    ax.set_ylim(*aquifer_ylim[aquifer_name])
     ax.grid(alpha=0.2)
     ax.legend(loc='upper right')
-
-
-
-    
-
-    #make the max y-value 2000
-    ax.set_ylim(1000, 0)
 
     #inset Bar Chart for n-values, removed for now
     """
