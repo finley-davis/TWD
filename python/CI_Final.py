@@ -2,7 +2,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from scipy.stats import theilslopes
+from scipy.stats import theilslopes, linregress
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 aquifers = {
@@ -65,7 +65,9 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
 
 
     slope, intercept, _, _ = theilslopes(means, Dates, alpha=0.90)
+    #slope, intercept, *_ = linregress(means, Dates)
     trend_line = intercept + slope * Dates
+
 
     #bootstrapping
     n_boot = 1000
@@ -110,8 +112,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
         print(f"Saved plot to: {save_path}")
     plt.close()
 #"""
-analyze_aquifer_data(file_path=aquifers['Hueco-Mesilla Basin']['path'], 
-                    aquifer_name = 'Hueco-Mesilla Basin', start_date = 1920, end_date = 2020, 
+analyze_aquifer_data(file_path=aquifers['Trinity']['path'], 
+                    aquifer_name = 'Trinity', start_date = 1920, end_date = 2020, 
                     output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Final Graphs/Confidence Interval')
 """
 # Run the function for all aquifers
