@@ -61,6 +61,18 @@ aquifer_ylim = {
     'Hueco-Mesilla Basin': (1500, 0)
 }
 
+aquifer_CP = {
+    'Ogallala': [1968, 1987, 2023],
+    'Edwards (Balcones Fault Zone)': [1955, 1980, 2023],
+    'Edwards-Trinity Plateau': [1969, 1986, 2023],
+    'Carrizo-Wilcox': [1944, 1987, 2023],
+    'Gulf Coast': [1949, 1971, 2023],
+    'Pecos Valley': [1973, 2023],
+    'Seymour': [1950, 2023],
+    'Trinity': [1958, 1969, 2023],
+    'Hueco-Mesilla Basin': [1950, 2023]
+}
+
 
 #name = 'Ogallala'
 #file path, forget the color coding for this code
@@ -252,9 +264,9 @@ for aquifer_name, properties in aquifers.items():
     # Call the function for each aquifer
     analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020, output_folder=output_folder)
 """
-analyze_aquifer_data(file_path = aquifers['Hueco-Mesilla Basin']['path'], 
-                    aquifer_name = 'Hueco-Mesilla Basin', 
+analyze_aquifer_data(file_path = aquifers['Ogallala']['path'], 
+                    aquifer_name = 'Ogallala', 
                     start_year=1920, 
-                    end_year=2020, 
-                    output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=[1950, 2020])
+                    end_year=2023, 
+                    #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
+                    manual_change_points=aquifer_CP['Ogallala'])
