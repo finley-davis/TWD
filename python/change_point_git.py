@@ -48,7 +48,6 @@ aquifers = {
     }
 }
 
-
 aquifer_ylim = {
     'Ogallala': (800, 0),
     'Edwards (Balcones Fault Zone)': (2000, 0),
@@ -62,7 +61,7 @@ aquifer_ylim = {
 }
 
 aquifer_CP = {
-    'Ogallala': [1968, 1987, 2023],
+    'Ogallala': [1968, 1987, 2023],    #testing slope change from 1980-2000-2020, idea from Jasechko et al., 2024
     'Edwards (Balcones Fault Zone)': [1955, 1980, 2023],
     'Edwards-Trinity Plateau': [1969, 1986, 2023],
     'Carrizo-Wilcox': [1944, 1987, 2023],
@@ -72,6 +71,8 @@ aquifer_CP = {
     'Trinity': [1958, 1969, 2023],
     'Hueco-Mesilla Basin': [1950, 2023]
 }
+
+aquifer_1980_2020_CP = [2000, 2020]
 
 
 #name = 'Ogallala'
@@ -248,8 +249,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
         os.makedirs(output_folder)
     """
     #NOTE: save the plot as a PDF in the specified folder
-    output_path = os.path.join(output_folder, f'{aquifer_name}_CP_analysis.pdf')
-    plt.savefig(output_path, format='pdf')
+    #output_path = os.path.join(output_folder, f'{aquifer_name}_CP_analysis.pdf')
+    #plt.savefig(output_path, format='pdf')
 
     #showing the plot
     plt.show()
@@ -268,5 +269,10 @@ analyze_aquifer_data(file_path = aquifers['Ogallala']['path'],
                     aquifer_name = 'Ogallala', 
                     start_year=1920, 
                     end_year=2023, 
+                    #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=aquifer_CP['Ogallala'])
+                    manual_change_points=aquifer_CP['Ogallala']
+                    #uncomment the following line to use the manual change points 1980-2020
+                    #manual_change_points = aquifer_1980_2020_CP)
+
+)
