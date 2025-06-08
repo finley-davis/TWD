@@ -75,8 +75,8 @@ aquifer_CP = {
 }
 
 #manual change points to examine time periods rather than algorithmically detected change points
-aquifer_1980_2020_CP = [2000, 2020]
-
+#It seems to be that once you enter the 21st century, there is not enough data points for a reliable trend
+aquifer_1980_2020_CP = [2000, 2023]
 
 #name = 'Ogallala'
 #file path, forget the color coding for this code
@@ -268,10 +268,10 @@ for aquifer_name, properties in aquifers.items():
     # Call the function for each aquifer
     analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020, output_folder=output_folder)
 """
-analyze_aquifer_data(file_path = aquifers['Ogallala']['path'], 
-                    aquifer_name = 'Ogallala', 
+analyze_aquifer_data(file_path = aquifers['Edwards-Trinity Plateau']['path'], 
+                    aquifer_name = 'Edwards-Trinity Plateau', 
                     start_year=1980, 
-                    end_year=2020, 
+                    end_year=2023, 
                     #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
                     #manual_change_points=aquifer_CP['Ogallala'],
