@@ -130,7 +130,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
 #"""
 analyze_aquifer_data(file_path=aquifers['Pecos Valley']['path'], 
                     aquifer_name = 'Pecos Valley', start_date = 1920, end_date = 2020, 
-                    output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Final Graphs/Confidence Interval')
+                    output_folder = '/Users/finleydavis/Desktop')
 """
 # Run the function for all aquifers
 output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Final Graphs/Confidence Interval'

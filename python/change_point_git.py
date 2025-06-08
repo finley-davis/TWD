@@ -6,8 +6,9 @@ from scipy.stats import linregress, theilslopes
 from scipy import stats
 import ruptures as rpt
 from adjustText import adjust_text
-from mpl_toolkits.axes_grid1.inset_locator import inset_axes  #for n chart
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes  #for n chart, may not need
 
+#dictioanry with aquifer names, colors, and file paths
 aquifers = {
     'Ogallala': {
         'color': 'red',
@@ -48,6 +49,7 @@ aquifers = {
     }
 }
 
+#dictionary with y-limits for each aquifer, used for plotting
 aquifer_ylim = {
     'Ogallala': (800, 0),
     'Edwards (Balcones Fault Zone)': (2000, 0),
@@ -59,7 +61,7 @@ aquifer_ylim = {
     'Trinity': (1500, 0),
     'Hueco-Mesilla Basin': (1500, 0)
 }
-
+#dictionary with change points for each aquifer, used for plotting
 aquifer_CP = {
     'Ogallala': [1968, 1987, 2023],    #testing slope change from 1980-2000-2020, idea from Jasechko et al., 2024
     'Edwards (Balcones Fault Zone)': [1955, 1980, 2023],
@@ -72,6 +74,7 @@ aquifer_CP = {
     'Hueco-Mesilla Basin': [1950, 2023]
 }
 
+#manual change points to examine time periods rather than algorithmically detected change points
 aquifer_1980_2020_CP = [2000, 2020]
 
 
@@ -267,12 +270,12 @@ for aquifer_name, properties in aquifers.items():
 """
 analyze_aquifer_data(file_path = aquifers['Ogallala']['path'], 
                     aquifer_name = 'Ogallala', 
-                    start_year=1920, 
-                    end_year=2023, 
+                    start_year=1980, 
+                    end_year=2020, 
                     #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=aquifer_CP['Ogallala']
+                    #manual_change_points=aquifer_CP['Ogallala'],
                     #uncomment the following line to use the manual change points 1980-2020
-                    #manual_change_points = aquifer_1980_2020_CP)
+                    manual_change_points = aquifer_1980_2020_CP
 
 )
