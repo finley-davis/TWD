@@ -10,17 +10,66 @@ import matplotlib.pyplot as plt
 
 #set the start and end year for the data
 start_year = 1920
-end_year = 2020
+end_year = 2025
 
 #file path for the csv file
-file_path = '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
+
+aquifers = {
+    'Ogallala': {
+        'color': 'red',
+        'path': '/Users/finleydavis/Desktop/csvs final/Ogallala_Final.csv'
+    },
+    'Edwards (Balcones Fault Zone)': {
+        'color': 'orange',
+        'path': '/Users/finleydavis/Desktop/csvs final/Edwards (Balcones Fault Zone) Aquifer)_Final.csv'
+    },
+    'Edwards-Trinity Plateau': {
+        'color': 'lime',
+        'path': '/Users/finleydavis/Desktop/csvs final/Edwards-Trinity Plateau_Final.csv'
+    },
+    'Carrizo-Wilcox': {
+        'color': 'green',
+        'path': '/Users/finleydavis/Desktop/csvs final/Carrizo-Wilcox_Final.csv'
+    },
+    'Gulf Coast': {
+        'color': 'blue',
+        'path': '/Users/finleydavis/Desktop/csvs final/Gulf Coast_Final.csv'
+    },
+    'Pecos Valley': {
+        'color': 'indigo',
+        'path': '/Users/finleydavis/Desktop/csvs final/Pecos Valley_Final.csv'
+    },
+    'Seymour': {
+        'color': 'violet',
+        'path': '/Users/finleydavis/Desktop/csvs final/Seymour_Final.csv'
+    },
+    'Trinity': {
+        'color': 'magenta',
+        'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
+    },
+    'Hueco-Mesilla Basin': {
+        'color': 'pink',
+        'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
+    }
+}
+
+aquifer_ylim = {
+    'Ogallala': (800, 0),
+    'Edwards (Balcones Fault Zone)': (2000, 0),
+    'Edwards-Trinity Plateau': (1000, 0),
+    'Carrizo-Wilcox': (1500, 0),
+    'Gulf Coast': (1500, 0),
+    'Pecos Valley': (1400, 0),
+    'Seymour': (300, 0),
+    'Trinity': (1500, 0),
+    'Hueco-Mesilla Basin': (1500, 0)
+}
 #read the csv file into a pandas dataframe
-df = pd.read_csv(file_path)
+
+df = pd.read_csv(aquifers['Ogallala']['path'])
 
 #renaming the columns of the dataframe
-df.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5', 'Lat', 'Long',
-              'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 
-              'Unnamed16']
+df.columns = ['Index', 'Lat', 'Long','County', 'Date', 'Depth']
 
 #convert the date column to datetime format, datetime is a data type that can be manipulated as dates
 df['Date'] = pd.to_datetime(df['Date'], format='%Y', errors='coerce')
@@ -39,7 +88,11 @@ df = df.dropna(subset=['Depth'])
 #creating bins for every 5 years within the date range, you can change the interval by changing the 5 to a different number
 bins = list(range(start_year, end_year + 1, 5))
 #creating labels for the bins
-labels = [f'{bins[i]}-{bins[i+1]-1}' for i in range(len(bins) - 1)]
+labels = [f'{bins[i]}-{bins[i+1]-1}' for i in range(len(bins) - 2)]
+# Handle the last label to end at the last year in the data
+last_bin_start = bins[-2]
+last_year = df['Year'].max()
+labels.append(f'{last_bin_start}-{last_year}')
 
 #bin the year column into the created bins and create a new Year_Bin column
 df['Year_Bin'] = pd.cut(df['Year'], bins=bins, labels=labels, right=False)
@@ -107,8 +160,8 @@ for i, year_bin in enumerate(year_bins):
         #mean depth annotation
         mu_annotation = f'μ = {mu:.2f}'
         sigma_annotation = f'σ = {sigma:.2f}'
-        plt.text(i, max_depth + 15, mu_annotation, ha='center', fontsize=7.5, color='blue')
-        plt.text(i, max_depth + 1, sigma_annotation, ha='center', fontsize=7.5, color='purple')
+        #plt.text(i, max_depth + 15, mu_annotation, ha='center', fontsize=7.5, color='blue')
+        #plt.text(i, max_depth + 1, sigma_annotation, ha='center', fontsize=7.5, color='purple')
 
         
         #i've kept this in from the original code histogram plot code (which is one graph for a 5 year period)
@@ -130,7 +183,7 @@ lognorm_median = np.exp(df['Depth'].apply(np.log).median())
 
 
 #setting title of the plot
-plt.title('Ogallala Aquifer Depth Distribution with Lognormal Fit (1930-2020)', pad=20)
+plt.title('Ogallala Aquifer Depth Distribution with Lognormal Fit (1930-2023)', pad=20)
 #setting x-axis label
 plt.xlabel('Year Interval')
 #setting y-axis label

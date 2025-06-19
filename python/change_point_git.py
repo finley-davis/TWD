@@ -289,6 +289,8 @@ for aquifer_name, properties in aquifers.items():
     # Call the function for each aquifer
     analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020, output_folder=output_folder)
 """
+
+#call this function to analyze a specific aquifer, for example the Ogallala
 analyze_aquifer_data(file_path = aquifers['Ogallala']['path'], 
                     aquifer_name = 'Ogallala', 
                     start_year=1920, 
