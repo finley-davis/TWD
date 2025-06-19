@@ -70,7 +70,7 @@ aquifer_CP = {
     'Gulf Coast': [1949, 1971, 2023],
     'Pecos Valley': [1973, 2023],
     'Seymour': [1950, 2023],
-    'Trinity': [1958, 1969, 2023],
+    'Trinity': [1958, 1969, 2003, 2023],
     'Hueco-Mesilla Basin': [1950, 2023]
 }
 
@@ -134,6 +134,14 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
     annual_means = df.groupby('Year')['Depth'].agg(lognormal_mean).interpolate().reset_index()
     years = annual_means['Year'].values
     means = annual_means['Depth'].values
+
+    min_ln_mean = np.min(means)
+    min_ln_mean_year = years[np.argmin(means)]
+    print(f'minimum ln-mean of: {min_ln_mean:.2f} for {aquifer_name} in {start_year}-{end_year}: {min_ln_mean_year}')
+
+    max_ln_mean = np.max(means)
+    max_ln_mean_year = years[np.argmax(means)]
+    print(f'maximum ln-mean of: {max_ln_mean:.2f} for {aquifer_name} in {start_year}-{end_year}: {max_ln_mean_year}')
 
     if len(means) < 2:
         print(f"Insufficient data for {aquifer_name}. Skipping change point detection.")
@@ -223,6 +231,15 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
 
         print(f"Segment {i+1} ({seg_years[0]}–{seg_years[-1]}): {seg_slope:.2f} ft/yr")
         prev_cp = cp
+    
+    #print the year with the most data points
+    max_year = yearly_counts.idxmax()
+    max_count = yearly_counts.max()
+    print(f"\nYear with the most data points: {max_year} ({max_count} data points)")
+    #print year with the least data points
+    min_year = yearly_counts.idxmin()
+    min_count = yearly_counts.min()
+    print(f"Year with the least data points: {min_year} ({min_count} data points)")
 
 
     #formatting
@@ -268,14 +285,14 @@ for aquifer_name, properties in aquifers.items():
     # Call the function for each aquifer
     analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020, output_folder=output_folder)
 """
-analyze_aquifer_data(file_path = aquifers['Edwards-Trinity Plateau']['path'], 
-                    aquifer_name = 'Edwards-Trinity Plateau', 
-                    start_year=1980, 
+analyze_aquifer_data(file_path = aquifers['Ogallala']['path'], 
+                    aquifer_name = 'Ogallala', 
+                    start_year=1920, 
                     end_year=2023, 
                     #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    #manual_change_points=aquifer_CP['Ogallala'],
+                    manual_change_points=aquifer_CP['Ogallala'],
                     #uncomment the following line to use the manual change points 1980-2020
-                    manual_change_points = aquifer_1980_2020_CP
+                    #manual_change_points = aquifer_1980_2020_CP
 
 )

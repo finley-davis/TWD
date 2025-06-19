@@ -4,8 +4,8 @@ from scipy.stats import lognorm
 import matplotlib.pyplot as plt
 
 #input parameters (years to filter data)
-start_year = 1930
-end_year = 1935
+start_year = 1966
+end_year = 1967
 
 
 #load in file path
@@ -95,26 +95,26 @@ plt.figure(figsize=(10, 6))
 #bins refers to number of divisions used to group the histogram data
 #density is the density of the data
 #alpha - the frequency of the data in each bin is plotted
-plt.hist(depth_data, bins=20, density=True, alpha=0.6, color='b', edgecolor='black') #orientation = 'horizontal' is for horizontal setting
+plt.hist(depth_data, bins=20, density=True, alpha=0.6, color='b', edgecolor='black', label = True) #orientation = 'horizontal' is for horizontal setting
 #x is the x variable r is the color of the line
 
 
 #linewidth is the width of the line
 #adding a vertical line for the mean of the depth data
-plt.axvline(x=np.exp(mu), color='g', linestyle='--', linewidth=2, label='Mean Depth') #geometric mean of the data, accounts for skewed data
+#plt.axvline(x=np.exp(mu), color='g', linestyle='--', linewidth=2, label='Mean Depth') #geometric mean of the data, accounts for skewed data
 #plt.axhline(x=np.exp(mu), color='g', linestyle='--', linewidth=2, label='Mean Depth') #this is for horizontal setting
 
 #adding text box with mu and sigma values
 props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
-plt.text(0.95, 0.95, textstr, transform=plt.gca().transAxes, fontsize=12,
-         verticalalignment='top', horizontalalignment='right', bbox=props)
+#plt.text(0.95, 0.95, textstr, transform=plt.gca().transAxes, fontsize=12,
+#         verticalalignment='top', horizontalalignment='right', bbox=props)
 #plotting the lognormal distribution function
 #switch x and pdf for horizontal plot
 plt.plot(x, pdf, 'r', linewidth=2) #peak is most likely value, most common well depth
 #labels
-plt.title(f'Ogallala Lognormal Distribution of Depth Data ({start_year}-{end_year})')
+plt.title(f'Ogallala Lognormal Distribution of Well Depth Data ({start_year}-{end_year})')
 plt.xlabel('Depth')
 plt.ylabel('Density')
-plt.legend(['Lognormal PDF', 'Depth Data Histogram'])
+plt.legend(['Histogram','Fitted PDF'])
 plt.show()
 

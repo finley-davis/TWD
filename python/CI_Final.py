@@ -78,11 +78,11 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     means = annual_means['Depth'].values
     print(means)
 
-
-    slope, intercept, _, _ = theilslopes(means, Dates, alpha=0.90)
+    #Documentation for the Theil-Sen estimator: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.theilslopes.html
+    slope, intercept, low_slope, high_slope = theilslopes(means, Dates, alpha=0.90)
     #slope, intercept, *_ = linregress(means, Dates)
     trend_line = intercept + slope * Dates
-
+    print(low_slope, high_slope)
 
     #bootstrapping
     n_boot = 1000
@@ -99,7 +99,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     upper_ci = np.percentile(bootstrap_trends, 95, axis=0)
 
     print(f"{aquifer_name} Theil-Sen slope: {slope:.4f}")
-    print("90% Bootstrap CI computed.\n")
+    print("90% Bootstrap Confidence Interval computed.\n")
 
 
     fig, ax = plt.subplots(figsize=(16, 10))
@@ -116,8 +116,10 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     ax.set_ylabel('Depth (ft)')
     ax.grid(alpha=0.2)
     ax.legend(loc='upper right')
-
+    
     plt.tight_layout()
+
+    plt.show()
 
 
     if output_folder:
@@ -128,9 +130,9 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
         print(f"Saved plot to: {save_path}")
     plt.close()
 #"""
-analyze_aquifer_data(file_path=aquifers['Pecos Valley']['path'], 
-                    aquifer_name = 'Pecos Valley', start_date = 1920, end_date = 2020, 
-                    output_folder = '/Users/finleydavis/Desktop')
+analyze_aquifer_data(file_path=aquifers['Ogallala']['path'], 
+                    aquifer_name = 'Ogallala', start_date = 1920, end_date = 2023)#, 
+                    #output_folder = '/Users/finleydavis/Desktop')
 """
 # Run the function for all aquifers
 output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Final Graphs/Confidence Interval'
