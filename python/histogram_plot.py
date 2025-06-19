@@ -167,8 +167,14 @@ for i, year_bin in enumerate(year_bins):
         #mean depth annotation
         mu_annotation = f'μ = {mean_original:.2f}'
         sigma_annotation = f'σ = {std_original:.2f}'
-        plt.text(i, min_depth + 15, mu_annotation, ha='center', fontsize=7.5, color='blue')
-        plt.text(i, min_depth + 1, sigma_annotation, ha='center', fontsize=7.5, color='purple')
+        #plt.text(i, min_depth - 30, mu_annotation, ha='center', fontsize=7.5, color='blue')
+        #plt.text(i, min_depth - 16, sigma_annotation, ha='center', fontsize=7.5, color='purple')
+        #export the mean and std to a csv file
+        #this is just printing the mean and standard deviation for each year bin
+        print(f'{year_bin}, {mean_original:.2f}, {std_original:.2f}')
+        #export to csv file
+        with open('lognormal_params.csv', 'a') as f:
+            f.write(f'{year_bin}, {mean_original:.2f}, {std_original:.2f}\n')
 
         
         #i've kept this in from the original code histogram plot code (which is one graph for a 5 year period)
@@ -190,7 +196,7 @@ lognorm_median = np.exp(df['Depth'].apply(np.log).median())
 
 
 #setting title of the plot
-plt.title('Ogallala Aquifer Depth Distribution with Lognormal Fit (1930-2023)', pad=20)
+plt.title('Ogallala Aquifer Depth Distribution with Lognormal Fit (1920-2023)', pad=20)
 #setting x-axis label
 plt.xlabel('Year Interval')
 #setting y-axis label
@@ -207,10 +213,11 @@ plt.grid(True, axis='y', linestyle='--')
 #adding a legend
 #plt.plot([], [], 'r', linewidth=2, label='Lognormal PD#F')
 
-plt.legend()
+#plot the legend in bottom right corner
+plt.legend(loc='upper right', fontsize=12)
 
 #adjusting the layout to fit everything
 plt.tight_layout()
 
 #displaying the plot
-plt.show()
+#plt.show()
