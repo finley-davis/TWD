@@ -132,7 +132,7 @@ for i, year_bin in enumerate(year_bins):
     #plot the histogram as horizontal bars on the left side
     #this is how i'm making the hist plot horizontal (up and down) instead of vertical (left and right)
     plt.barh(bin_edges[:-1], -hist, height=np.diff(bin_edges), 
-             left=i, color='red')
+             left=i, color='red', label = 'Histogram' if i == 0 else "")
 
     #plot the histogram as horizontal bars on the right side
     #height = is the height of the bars based on the bin edges, which are the depth values
@@ -151,17 +151,24 @@ for i, year_bin in enumerate(year_bins):
 
         #normalize the pdf values
         pdf = pdf / pdf.max() * 0.4
+        #print(pdf)
 
         #plot the pdf on the left side
-        plt.plot(i - pdf, y_points, 'black', linewidth=2)
+        plt.plot(i - pdf, y_points, 'black', linewidth=2, label='Lognormal PDF' if i == 0 else "")
         #plot the pdf on the right side
         plt.plot(i + pdf, y_points, 'black', linewidth=2)
 
+        #mean values in normal space
+        mean_original = np.exp(mu + 0.5 * sigma**2)
+        #standard deviation in normal space
+        std_original = np.sqrt((np.exp(sigma**2) - 1) * np.exp(2 * mu + sigma**2))
+
+
         #mean depth annotation
-        mu_annotation = f'μ = {mu:.2f}'
-        sigma_annotation = f'σ = {sigma:.2f}'
-        #plt.text(i, max_depth + 15, mu_annotation, ha='center', fontsize=7.5, color='blue')
-        #plt.text(i, max_depth + 1, sigma_annotation, ha='center', fontsize=7.5, color='purple')
+        mu_annotation = f'μ = {mean_original:.2f}'
+        sigma_annotation = f'σ = {std_original:.2f}'
+        plt.text(i, min_depth + 15, mu_annotation, ha='center', fontsize=7.5, color='blue')
+        plt.text(i, min_depth + 1, sigma_annotation, ha='center', fontsize=7.5, color='purple')
 
         
         #i've kept this in from the original code histogram plot code (which is one graph for a 5 year period)
@@ -192,6 +199,8 @@ plt.ylabel('Depth (ft)')
 #setting x-axis ticks, which are the year bins
 plt.xticks(x_positions, year_bins, rotation=45, ha='right')
 
+#flip y-axis
+plt.gca().invert_yaxis()
 #adding a grid to the y-axis, which is the depth axis
 plt.grid(True, axis='y', linestyle='--')
 
