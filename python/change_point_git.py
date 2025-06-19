@@ -63,7 +63,7 @@ aquifer_ylim = {
 }
 #dictionary with change points for each aquifer, used for plotting
 aquifer_CP = {
-    'Ogallala': [1968, 1987, 2023],    #testing slope change from 1980-2000-2020, idea from Jasechko et al., 2024
+    'Ogallala': [1968, 1987, 2010, 2023],    #testing slope change from 1980-2000-2020, idea from Jasechko et al., 2024
     'Edwards (Balcones Fault Zone)': [1955, 1980, 2023],
     'Edwards-Trinity Plateau': [1969, 1986, 2023],
     'Carrizo-Wilcox': [1944, 1987, 2023],
@@ -143,6 +143,10 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
     max_ln_mean_year = years[np.argmax(means)]
     print(f'maximum ln-mean of: {max_ln_mean:.2f} for {aquifer_name} in {start_year}-{end_year}: {max_ln_mean_year}')
 
+    #print total number of data points
+    total_data_points = len(df)
+    print(f"\nTotal number of data points for {aquifer_name} in {start_year}-{end_year}: {total_data_points}")
+
     if len(means) < 2:
         print(f"Insufficient data for {aquifer_name}. Skipping change point detection.")
         return  #skip change point analysis if not enough data points
@@ -182,7 +186,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
 
 
     #creating figure
-    fig, ax = plt.subplots(figsize=(16, 10))
+    fig, ax = plt.subplots(figsize=(12, 7))
 
     #scatter plot of data points
     ax.scatter(df.Year, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis') #, label=f'Data Points (n={len(df):,})')
