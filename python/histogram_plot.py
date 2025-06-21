@@ -66,7 +66,7 @@ aquifer_ylim = {
 }
 #read the csv file into a pandas dataframe
 
-df = pd.read_csv(aquifers['Ogallala']['path'])
+df = pd.read_csv(aquifers['Edwards (Balcones Fault Zone)']['path'])
 
 #renaming the columns of the dataframe
 df.columns = ['Index', 'Lat', 'Long','County', 'Date', 'Depth']
@@ -132,12 +132,12 @@ for i, year_bin in enumerate(year_bins):
     #plot the histogram as horizontal bars on the left side
     #this is how i'm making the hist plot horizontal (up and down) instead of vertical (left and right)
     plt.barh(bin_edges[:-1], -hist, height=np.diff(bin_edges), 
-             left=i, color='red', label = 'Histogram' if i == 0 else "")
+             left=i, color=aquifers['Edwards (Balcones Fault Zone)']['color'], label = 'Histogram' if i == 0 else "")
 
     #plot the histogram as horizontal bars on the right side
     #height = is the height of the bars based on the bin edges, which are the depth values
     plt.barh(bin_edges[:-1], hist, height=np.diff(bin_edges), 
-             left=i, color='red')
+             left=i, color=aquifers['Edwards (Balcones Fault Zone)']['color'])
 
     #depth data points, data for log norm. dist.
     if len(depth_data) > 0: 
@@ -173,7 +173,7 @@ for i, year_bin in enumerate(year_bins):
         #this is just printing the mean and standard deviation for each year bin
         print(f'{year_bin}, {mean_original:.2f}, {std_original:.2f}')
         #export to csv file
-        with open('lognormal_params.csv', 'a') as f:
+        with open('/Users/finleydavis/Desktop/lognormal_params.csv', 'a') as f:
             f.write(f'{year_bin}, {mean_original:.2f}, {std_original:.2f}\n')
 
         
@@ -196,7 +196,7 @@ lognorm_median = np.exp(df['Depth'].apply(np.log).median())
 
 
 #setting title of the plot
-plt.title('Ogallala Aquifer Depth Distribution with Lognormal Fit (1920-2023)', pad=20)
+plt.title('Edwards (Balcones Fault Zone) Aquifer Depth Distribution with Lognormal Fit (1920-2023)', pad=20)
 #setting x-axis label
 plt.xlabel('Year Interval')
 #setting y-axis label
@@ -220,4 +220,4 @@ plt.legend(loc='upper right', fontsize=12)
 plt.tight_layout()
 
 #displaying the plot
-#plt.show()
+plt.show()
