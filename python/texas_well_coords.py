@@ -9,46 +9,49 @@ texas = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Python/Texas
 # dictionary of aquifers with color and path to data
 aquifers = {
     'Ogallala': {
-        'color': 'red',
+        'color': 'lightblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Ogallala_Final.csv'
-    },
+    }#,
+}
+"""
     'Edwards (Balcones Fault Zone)': {
-        'color': 'orange',
+        'color': 'darkblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Edwards (Balcones Fault Zone) Aquifer)_Final.csv'
     },
     'Edwards-Trinity Plateau': {
-        'color': 'yellow',
+        'color': 'lightgreen',
         'path': '/Users/finleydavis/Desktop/csvs final/Edwards-Trinity Plateau_Final.csv'
     },
     'Carrizo-Wilcox': {
-        'color': 'green',
+        'color': 'red',
         'path': '/Users/finleydavis/Desktop/csvs final/Carrizo-Wilcox_Final.csv'
     },
     'Gulf Coast': {
-        'color': 'blue',
+        'color': 'yellow',
         'path': '/Users/finleydavis/Desktop/csvs final/Gulf Coast_Final.csv'
     },
     'Pecos Valley': {
-        'color': 'indigo',
+        'color': 'orange',
         'path': '/Users/finleydavis/Desktop/csvs final/Pecos Valley_Final.csv'
     },
     'Seymour': {
-        'color': 'violet',
+        'color': 'brown',
         'path': '/Users/finleydavis/Desktop/csvs final/Seymour_Final.csv'
     },
     'Trinity': {
-        'color': 'magenta',
-        'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'  # fixed typo here
+        'color': 'green',
+        'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
     },
     'Hueco-Mesilla Basin': {
         'color': 'pink',
         'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
     }
-}
+"""
+#}
 
 # plot Texas base map
-fig, ax = plt.subplots(figsize=(10, 10))
-texas.plot(ax=ax, color='lightblue', edgecolor='black')
+fig, ax = plt.subplots(figsize=(9, 6))
+texas.plot(ax=ax, color='#F5DEB3', edgecolor='black')  # wheat (lighter tan)
 
 # list for legend and counter for total points
 legend_labels = []
