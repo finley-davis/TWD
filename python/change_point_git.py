@@ -19,24 +19,24 @@ aquifers = {
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards (Balcones Fault Zone) Aquifer.csv'
     },
     'Edwards-Trinity Plateau': {
-        'color': '#CC9900',
+        'color': 'lightgreen',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards-Trinity Plateau.csv'
     },
     'Carrizo-Wilcox': {
-        'color': 'green',
+        'color': 'red',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Carrizo-Wilcox.csv'
     },
     'Gulf Coast': {
-        'color': 'blue',
+        'color': 'yellow',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Gulf Coast.csv'
     },
 
     'Pecos Valley': {
-        'color': 'indigo',
+        'color': 'orange',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Pecos Valley.csv'
     },
     'Seymour': {
-        'color': 'violet',
+        'color': 'brown',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Seymour.csv'
     },
     'Trinity': {
@@ -67,9 +67,9 @@ aquifer_CP = {
     'Edwards (Balcones Fault Zone)': [1955, 1980, 2023],
     'Edwards-Trinity Plateau': [1969, 1986, 2023],
     'Carrizo-Wilcox': [1944, 1987, 2023],
-    'Gulf Coast': [1949, 1971, 2023],
-    'Pecos Valley': [1973, 2023],
-    'Seymour': [1950, 2023],
+    'Gulf Coast': [1949, 1965, 2023],
+    'Pecos Valley': [1973, 2007, 2023],
+    'Seymour': [1976, 2016],
     'Trinity': [1958, 1969, 2003, 2023],
     'Hueco-Mesilla Basin': [1950, 2023]
 }
@@ -225,12 +225,12 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
         if i < len(change_points) - 1:
             cp_year = years[cp]
             if i == 0:  #add label only for the first vertical line
-                plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=0.7, label='Change Point')
+                plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1, label='Change Point')
             else:
-                plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=0.7)
+                plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1)
 
             #add text box with the year of the change point
-            plt.text(cp_year, max(means) * 1.075, f'{int(cp_year)}', color=aquifers[aquifer_name]['color'], 
+            plt.text(cp_year, max(means) * 1.1, f'{int(cp_year)}', color='black',#aquifers[aquifer_name]['color'], 
                      fontsize=10, ha='center', bbox=dict(facecolor='white', alpha=0.7, edgecolor='none'))
 
         print(f"Segment {i+1} ({seg_years[0]}–{seg_years[-1]}): {seg_slope:.2f} ft/yr")
@@ -291,13 +291,13 @@ for aquifer_name, properties in aquifers.items():
 """
 
 #call this function to analyze a specific aquifer, for example the Ogallala
-analyze_aquifer_data(file_path = aquifers['Edwards (Balcones Fault Zone)']['path'], 
-                    aquifer_name = 'Edwards (Balcones Fault Zone)', 
+analyze_aquifer_data(file_path = aquifers['Seymour']['path'], 
+                    aquifer_name = 'Seymour', 
                     start_year=1920, 
                     end_year=2023, 
                     #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=aquifer_CP['Edwards (Balcones Fault Zone)'],
+                    manual_change_points=aquifer_CP['Seymour'],
                     #uncomment the following line to use the manual change points 1980-2020
                     #manual_change_points = aquifer_1980_2020_CP
 
