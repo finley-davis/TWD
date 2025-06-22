@@ -11,41 +11,40 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes  #for n chart, may 
 #dictioanry with aquifer names, colors, and file paths
 aquifers = {
     'Ogallala': {
-        'color': 'red',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
+        'color': 'lightblue',
+        'path': '/Users/finleydavis/Desktop/csvs final/Ogallala_Final.csv'
     },
     'Edwards (Balcones Fault Zone)': {
-        'color': 'orange',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards (Balcones Fault Zone) Aquifer.csv'
+        'color': 'darkblue',
+        'path': '/Users/finleydavis/Desktop/csvs final/Edwards (Balcones Fault Zone) Aquifer)_Final.csv'
     },
     'Edwards-Trinity Plateau': {
         'color': 'lightgreen',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards-Trinity Plateau.csv'
+        'path': '/Users/finleydavis/Desktop/csvs final/Edwards-Trinity Plateau_Final.csv'
     },
     'Carrizo-Wilcox': {
         'color': 'red',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Carrizo-Wilcox.csv'
+        'path': '/Users/finleydavis/Desktop/csvs final/Carrizo-Wilcox_Final.csv'
     },
     'Gulf Coast': {
         'color': 'yellow',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Gulf Coast.csv'
+        'path': '/Users/finleydavis/Desktop/csvs final/Gulf Coast_Final.csv'
     },
-
     'Pecos Valley': {
         'color': 'orange',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Pecos Valley.csv'
+        'path': '/Users/finleydavis/Desktop/csvs final/Pecos Valley_Final.csv'
     },
     'Seymour': {
         'color': 'brown',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Seymour.csv'
+        'path': '/Users/finleydavis/Desktop/csvs final/Seymour_Final.csv'
     },
     'Trinity': {
-        'color': 'magenta',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Trinty.csv'
+        'color': 'green',
+        'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
     },
     'Hueco-Mesilla Basin': {
         'color': 'pink',
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Hueco-Mesilla Basin.csv'
+        'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
     }
 }
 
@@ -71,7 +70,7 @@ aquifer_CP = {
     'Pecos Valley': [1973, 2007, 2023],
     'Seymour': [1976, 2016],
     'Trinity': [1958, 1969, 2003, 2023],
-    'Hueco-Mesilla Basin': [1950, 2023]
+    'Hueco-Mesilla Basin': [1950, 2021]
 }
 
 #manual change points to examine time periods rather than algorithmically detected change points
@@ -230,7 +229,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
                 plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1)
 
             #add text box with the year of the change point
-            plt.text(cp_year, max(means) * 1.1, f'{int(cp_year)}', color='black',#aquifers[aquifer_name]['color'], 
+            plt.text(cp_year, max(means) * 0.7, f'{int(cp_year)}', color='black',#aquifers[aquifer_name]['color'], 
                      fontsize=10, ha='center', bbox=dict(facecolor='white', alpha=0.7, edgecolor='none'))
 
         print(f"Segment {i+1} ({seg_years[0]}–{seg_years[-1]}): {seg_slope:.2f} ft/yr")
@@ -244,6 +243,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
     min_year = yearly_counts.idxmin()
     min_count = yearly_counts.min()
     print(f"Year with the least data points: {min_year} ({min_count} data points)")
+
+    #print the years in which there are no data points
 
 
     #formatting
@@ -291,13 +292,13 @@ for aquifer_name, properties in aquifers.items():
 """
 
 #call this function to analyze a specific aquifer, for example the Ogallala
-analyze_aquifer_data(file_path = aquifers['Seymour']['path'], 
-                    aquifer_name = 'Seymour', 
+analyze_aquifer_data(file_path = aquifers['Hueco-Mesilla Basin']['path'], 
+                    aquifer_name = 'Hueco-Mesilla Basin', 
                     start_year=1920, 
                     end_year=2023, 
                     #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=aquifer_CP['Seymour'],
+                    manual_change_points=aquifer_CP['Hueco-Mesilla Basin'],
                     #uncomment the following line to use the manual change points 1980-2020
                     #manual_change_points = aquifer_1980_2020_CP
 

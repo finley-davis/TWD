@@ -16,35 +16,35 @@ end_year = 2025
 
 aquifers = {
     'Ogallala': {
-        'color': 'red',
+        'color': 'lightblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Ogallala_Final.csv'
     },
     'Edwards (Balcones Fault Zone)': {
-        'color': 'orange',
+        'color': 'darkblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Edwards (Balcones Fault Zone) Aquifer)_Final.csv'
     },
     'Edwards-Trinity Plateau': {
-        'color': 'lime',
+        'color': 'lightgreen',
         'path': '/Users/finleydavis/Desktop/csvs final/Edwards-Trinity Plateau_Final.csv'
     },
     'Carrizo-Wilcox': {
-        'color': 'green',
+        'color': 'red',
         'path': '/Users/finleydavis/Desktop/csvs final/Carrizo-Wilcox_Final.csv'
     },
     'Gulf Coast': {
-        'color': 'blue',
+        'color': 'yellow',
         'path': '/Users/finleydavis/Desktop/csvs final/Gulf Coast_Final.csv'
     },
     'Pecos Valley': {
-        'color': 'indigo',
+        'color': 'orange',
         'path': '/Users/finleydavis/Desktop/csvs final/Pecos Valley_Final.csv'
     },
     'Seymour': {
-        'color': 'violet',
+        'color': 'brown',
         'path': '/Users/finleydavis/Desktop/csvs final/Seymour_Final.csv'
     },
     'Trinity': {
-        'color': 'magenta',
+        'color': 'green',
         'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
     },
     'Hueco-Mesilla Basin': {
