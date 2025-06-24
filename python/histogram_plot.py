@@ -56,17 +56,17 @@ aquifers = {
 aquifer_ylim = {
     'Ogallala': (800, 0),
     'Edwards (Balcones Fault Zone)': (2000, 0),
-    'Edwards-Trinity Plateau': (1000, 0),
-    'Carrizo-Wilcox': (1500, 0),
+    'Edwards-Trinity Plateau': (2000, 0),
+    'Carrizo-Wilcox': (2500, 0),
     'Gulf Coast': (1500, 0),
-    'Pecos Valley': (1400, 0),
-    'Seymour': (300, 0),
-    'Trinity': (1500, 0),
+    'Pecos Valley': (2000, 0),
+    'Seymour': (250, 0),
+    'Trinity': (2000, 0),
     'Hueco-Mesilla Basin': (1500, 0)
 }
 #read the csv file into a pandas dataframe
-
-df = pd.read_csv(aquifers['Edwards (Balcones Fault Zone)']['path'])
+aquifer_name = 'Edwards (Balcones Fault Zone)'  # Change this to the desired aquifer name
+df = pd.read_csv(aquifers[f'{aquifer_name}']['path'])
 
 #renaming the columns of the dataframe
 df.columns = ['Index', 'Lat', 'Long','County', 'Date', 'Depth']
@@ -131,13 +131,13 @@ for i, year_bin in enumerate(year_bins):
     
     #plot the histogram as horizontal bars on the left side
     #this is how i'm making the hist plot horizontal (up and down) instead of vertical (left and right)
-    plt.barh(bin_edges[:-1], -hist, height=np.diff(bin_edges), 
-             left=i, color=aquifers['Edwards (Balcones Fault Zone)']['color'], label = 'Histogram' if i == 0 else "")
+    plt.barh(bin_edges[:-1], -hist, height=np.diff(bin_edges), #edgecolor = 'lightgray',
+             left=i, color=aquifers[f'{aquifer_name}']['color'], label = 'Histogram' if i == 0 else "")
 
     #plot the histogram as horizontal bars on the right side
     #height = is the height of the bars based on the bin edges, which are the depth values
-    plt.barh(bin_edges[:-1], hist, height=np.diff(bin_edges), 
-             left=i, color=aquifers['Edwards (Balcones Fault Zone)']['color'])
+    plt.barh(bin_edges[:-1], hist, height=np.diff(bin_edges), #edgecolor = 'lightgray', 
+             left=i, color=aquifers[f'{aquifer_name}']['color'])
 
     #depth data points, data for log norm. dist.
     if len(depth_data) > 0: 
@@ -196,7 +196,7 @@ lognorm_median = np.exp(df['Depth'].apply(np.log).median())
 
 
 #setting title of the plot
-plt.title('Edwards (Balcones Fault Zone) Aquifer Depth Distribution with Lognormal Fit (1920-2023)', pad=20)
+plt.title(f'{aquifer_name} Aquifer Depth Distribution with Lognormal Fit (1920-2023)', pad=20)
 #setting x-axis label
 plt.xlabel('Year Interval')
 #setting y-axis label
@@ -210,6 +210,8 @@ plt.gca().invert_yaxis()
 #adding a grid to the y-axis, which is the depth axis
 plt.grid(True, axis='y', linestyle='--')
 
+#mkae the y-lim from the aquifer_ylim dictionary
+plt.ylim(aquifer_ylim[f'{aquifer_name}'])
 #adding a legend
 #plt.plot([], [], 'r', linewidth=2, label='Lognormal PD#F')
 
@@ -220,4 +222,6 @@ plt.legend(loc='upper right', fontsize=12)
 plt.tight_layout()
 
 #displaying the plot
-plt.show()
+#plt.show()
+
+plt.savefig(f'/Users/finleydavis/Desktop/{aquifer_name}_Aquifer_Depth_Distribution.pdf', dpi=300, bbox_inches='tight')

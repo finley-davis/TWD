@@ -62,7 +62,7 @@ aquifer_ylim = {
 }
 #dictionary with change points for each aquifer, used for plotting
 aquifer_CP = {
-    'Ogallala': [1968, 1987, 2010, 2023],    #testing slope change from 1980-2000-2020, idea from Jasechko et al., 2024
+    'Ogallala': [1968, 1987, 2023],    #testing slope change from 1980-2000-2020, idea from Jasechko et al., 2024
     'Edwards (Balcones Fault Zone)': [1955, 1980, 2023],
     'Edwards-Trinity Plateau': [1969, 1986, 2023],
     'Carrizo-Wilcox': [1944, 1987, 2023],
@@ -229,7 +229,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
                 plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1)
 
             #add text box with the year of the change point
-            plt.text(cp_year, max(means) * 0.7, f'{int(cp_year)}', color='black',#aquifers[aquifer_name]['color'], 
+            plt.text(cp_year, max(means) * 1.1, f'{int(cp_year)}', color='black',#aquifers[aquifer_name]['color'], 
                      fontsize=10, ha='center', bbox=dict(facecolor='white', alpha=0.7, edgecolor='none'))
 
         print(f"Segment {i+1} ({seg_years[0]}–{seg_years[-1]}): {seg_slope:.2f} ft/yr")
@@ -292,13 +292,13 @@ for aquifer_name, properties in aquifers.items():
 """
 
 #call this function to analyze a specific aquifer, for example the Ogallala
-analyze_aquifer_data(file_path = aquifers['Hueco-Mesilla Basin']['path'], 
-                    aquifer_name = 'Hueco-Mesilla Basin', 
+analyze_aquifer_data(file_path = aquifers['Edwards (Balcones Fault Zone)']['path'], 
+                    aquifer_name = 'Edwards (Balcones Fault Zone)', 
                     start_year=1920, 
                     end_year=2023, 
                     #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=aquifer_CP['Hueco-Mesilla Basin'],
+                    manual_change_points=aquifer_CP['Edwards (Balcones Fault Zone)'],
                     #uncomment the following line to use the manual change points 1980-2020
                     #manual_change_points = aquifer_1980_2020_CP
 

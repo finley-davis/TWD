@@ -11,9 +11,7 @@ aquifers = {
     'Ogallala': {
         'color': 'lightblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Ogallala_Final.csv'
-    }#,
-}
-"""
+    },
     'Edwards (Balcones Fault Zone)': {
         'color': 'darkblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Edwards (Balcones Fault Zone) Aquifer)_Final.csv'
@@ -46,12 +44,11 @@ aquifers = {
         'color': 'pink',
         'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
     }
-"""
-#}
+}
 
 # plot Texas base map
 fig, ax = plt.subplots(figsize=(9, 6))
-texas.plot(ax=ax, color='#F5DEB3', edgecolor='black')  # wheat (lighter tan)
+texas.plot(ax=ax, color='#F8F8FF', edgecolor='black')  # off-white (GhostWhite)
 
 # list for legend and counter for total points
 legend_labels = []
@@ -80,9 +77,11 @@ plt.xlabel("Longitude")
 plt.ylabel("Latitude")
 plt.grid()
 plt.tight_layout()
-plt.legend(title="Aquifer Well Points", labels=legend_labels, markerscale=10)
+plt.legend(title="Aquifer Well Points", labels=legend_labels, markerscale=20, loc='lower left', fontsize='small')
 plt.title("Map of Texas with Well Points Delineated by Aquifer")
-plt.show()
+#plt.show()
+
+plt.savefig('/Users/finleydavis/Desktop/Texas_Well_Points.pdf', dpi=300, bbox_inches='tight')
 
 # output total number of points
 print(f"Total number of points plotted: {total_points}")
