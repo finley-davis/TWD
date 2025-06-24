@@ -80,9 +80,10 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
 
     #Documentation for the Theil-Sen estimator: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.theilslopes.html
     slope, intercept, low_slope, high_slope = theilslopes(means, Dates, alpha=0.90)
+
     #slope, intercept, *_ = linregress(means, Dates)
     trend_line = intercept + slope * Dates
-    print(low_slope, high_slope)
+
 
     #bootstrapping
     n_boot = 1000
@@ -107,6 +108,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     ax.scatter(df.Date, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis', label=f'Data Points (n={len(df):,})')
     ax.plot(Dates, means, 'ko-', markersize=4, label='Annual Lognormal Means', zorder=4)
     ax.plot(Dates, trend_line, '--', color=aquifer_color, label=f'Theil-Sen Trend (slope={slope:.2f})', zorder=5)
+    #ax.plot(Dates, intercept + low_slope * Dates, 'r--', label='Lower 90% CI', zorder=3)
+    #ax.plot(Dates, intercept + high_slope * Dates, 'r--', label='Upper 90% CI', zorder=3)
     ax.fill_between(Dates, lower_ci, upper_ci, alpha=0.3, color=aquifer_color, label='90% Bootstrap CI')
 
 
