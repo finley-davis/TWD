@@ -42,7 +42,7 @@ aquifers = {
         'color': 'green',
         'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
     },
-    'Hueco-Mesilla Basin': {
+    'Hueco-Mesilla Bolsons': {
         'color': 'pink',
         'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
     }
@@ -58,7 +58,7 @@ aquifer_ylim = {
     'Pecos Valley': (1400, 0),
     'Seymour': (300, 0),
     'Trinity': (1500, 0),
-    'Hueco-Mesilla Basin': (1500, 0)
+    'Hueco-Mesilla Bolsons': (1500, 0)
 }
 #dictionary with change points for each aquifer, used for plotting
 aquifer_CP = {
@@ -70,7 +70,7 @@ aquifer_CP = {
     'Pecos Valley': [1973, 2007, 2023],
     'Seymour': [1976, 2016],
     'Trinity': [1958, 1969, 2003, 2023],
-    'Hueco-Mesilla Basin': [1950, 2021]
+    'Hueco-Mesilla Bolsons': [1950, 2021]
 }
 
 #manual change points to examine time periods rather than algorithmically detected change points
@@ -292,13 +292,13 @@ for aquifer_name, properties in aquifers.items():
 """
 
 #call this function to analyze a specific aquifer, for example the Ogallala
-analyze_aquifer_data(file_path = aquifers['Edwards (Balcones Fault Zone)']['path'], 
-                    aquifer_name = 'Edwards (Balcones Fault Zone)', 
+analyze_aquifer_data(file_path = aquifers['Hueco-Mesilla Bolsons']['path'], 
+                    aquifer_name = 'Hueco-Mesilla Bolsons', 
                     start_year=1920, 
                     end_year=2023, 
                     #uncomment the following line to save the output in a specific folder
                     #output_folder='/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/05:09:2025 CP Analysis',
-                    manual_change_points=aquifer_CP['Edwards (Balcones Fault Zone)'],
+                    manual_change_points=aquifer_CP['Hueco-Mesilla Bolsons'],
                     #uncomment the following line to use the manual change points 1980-2020
                     #manual_change_points = aquifer_1980_2020_CP
 

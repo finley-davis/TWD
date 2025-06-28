@@ -47,7 +47,7 @@ aquifers = {
         'color': 'green',
         'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
     },
-    'Hueco-Mesilla Basin': {
+    'Hueco-Mesilla Bolsons': {
         'color': 'pink',
         'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
     }
@@ -62,10 +62,10 @@ aquifer_ylim = {
     'Pecos Valley': (2000, 0),
     'Seymour': (250, 0),
     'Trinity': (2000, 0),
-    'Hueco-Mesilla Basin': (1500, 0)
+    'Hueco-Mesilla Bolsons': (1500, 0)
 }
 #read the csv file into a pandas dataframe
-aquifer_name = 'Edwards (Balcones Fault Zone)'  # Change this to the desired aquifer name
+aquifer_name = 'Hueco-Mesilla Bolsons'  # Change this to the desired aquifer name
 df = pd.read_csv(aquifers[f'{aquifer_name}']['path'])
 
 #renaming the columns of the dataframe
@@ -109,7 +109,7 @@ x_positions = np.arange(len(year_bins))
 max_depth = df['Depth'].max()
 min_depth = df['Depth'].min()
 #creating bin edges for the depth histogram
-bin_edges = np.linspace(min_depth, max_depth, 50)  
+bin_edges = np.linspace(min_depth, max_depth, 150)  
 #calculating the midpoints of the bin edges, which will be used for plotting the lognormal distribution
 y_points = (bin_edges[:-1] + bin_edges[1:]) / 2 
 

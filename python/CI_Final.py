@@ -38,7 +38,7 @@ aquifers = {
         'color': 'magenta',
         'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
     },
-    'Hueco-Mesilla Basin': {
+    'Hueco-Mesilla Bolsons': {
         'color': 'pink',
         'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
     }
@@ -53,7 +53,7 @@ aquifer_ylim = {
     'Pecos Valley': (1400, 0),
     'Seymour': (300, 0),
     'Trinity': (1500, 0),
-    'Hueco-Mesilla Basin': (1500, 0)
+    'Hueco-Mesilla Bolsons': (1500, 0)
 }
 
 def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_folder=None):
@@ -133,8 +133,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
         print(f"Saved plot to: {save_path}")
     plt.close()
 #"""
-analyze_aquifer_data(file_path=aquifers['Ogallala']['path'], 
-                    aquifer_name = 'Ogallala', start_date = 1920, end_date = 2023)#, 
+analyze_aquifer_data(file_path=aquifers['Hueco-Mesilla Bolsons']['path'], 
+                    aquifer_name = 'Hueco-Mesilla Bolsons', start_date = 1920, end_date = 2023)#, 
                     #output_folder = '/Users/finleydavis/Desktop')
 """
 # Run the function for all aquifers
