@@ -41,7 +41,7 @@ aquifers = {
         'color': 'magenta',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Trinty.csv'
     },
-    'Hueco-Mesilla Basin': {
+    'Hueco-Mesilla Bolsons': {
         'color': 'pink',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Hueco-Mesilla Basin.csv'
     }
@@ -85,7 +85,7 @@ def analyze_aquifer_data(file_path, start_year=1920, end_year=2020):
     plt.bar(yearly_counts.index, yearly_counts.values, color='black', width=0.8)
     plt.xlabel('Year')
     plt.ylabel('Number of Data Points')
-    plt.title(f"{os.path.splitext(os.path.basename(file_path))[0]} Number of Data Points per Year")
+    plt.title(f"{[k for k, v in aquifers.items() if v['path'] == file_path][0]} Number of Data Points per Year")
     plt.grid(True)
 
     # Show the plot
@@ -97,7 +97,7 @@ def analyze_aquifer_data(file_path, start_year=1920, end_year=2020):
 safe_folder_name = "n_values_all_aquifers"
 
 #create the output directory
-output_dir = f"/Users/finleydavis/Desktop/Cardenas Research/Paper/Figures{safe_folder_name}"
+output_dir = f"/Users/finleydavis/Desktop/Figures{safe_folder_name}"
 os.makedirs(output_dir, exist_ok=True)
 
 #main loop to generate and save each aquifer plot
@@ -109,3 +109,4 @@ for name, data in aquifers.items():
     output_path = os.path.join(output_dir, f"{name}_n_values.pdf")
     plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
+
