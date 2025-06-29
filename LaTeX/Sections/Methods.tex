@@ -1,0 +1,27 @@
+\section*{Methods}
+
+\subsection*{Data Collection}
+
+The data used for this study were download from the Texas Water Development Board’s Groundwater Database (Texas Water Development Board, n.d.). This dataset consists of over 93,400 well data points that exist within the nine major Texas aquifers. Many of these data points, however, lack the 4 key attributes that are required by this study, which are aquifer name, location, depth of well, and date of well construction. This observation, therefore, necessitated the filtering of these data according to these attributes. After filtering, 66,742 well points remained, which  could then be used to examine long-term well depth trends both spatially and temporally.
+
+\subsection*{Log-Normal Mean Well Depth}
+
+These data, when analyzed at the scale of one year, almost always exhibit a log-normal distribution, meaning that the logarithm of the depth values are normally distributed (Figure~\ref{fig:OG_1yr_LN}). Due to this distribution pattern, log-normal mean yearly depth values must be calculated according to Equation (1) to accurately analyze the mean annual well depth in linear-space \cite{Jarvis2016}.
+
+\begin{equation}
+    \mathbb{E}[X] = \exp\left(\mu + \frac{\sigma^2}{2}\right)
+\end{equation}
+
+\subsection*{Change Point Analysis}
+
+Based on the calculated $\mathbb{E}[X]$ values for each year, the data could be analyzed more precisely than by using individual well points alone. $\mathbb{E}[X]$ values were plotted for each aquifer for every year between 1920 and 2023. These dates were selected because they span a large portion of the dataset’s temporal range and allow for the capture of long-term trends in well depth behavior.
+
+Upon plotting these values, it was possible to visualize the years in which aquifer well depth trend slopes experienced significant changes in both magnitude and direction. The years marking these shifts were identified as \textit{change points} and symbolized by dashed vertical lines.
+
+\subsection*{Theil-Sen Regression}
+
+To reliably analyze well depth trends over extended time periods, a Theil-Sen regression was used for its robustness against outliers. This estimator calculates the slope as a median of all pairwise slopes between data points and thus allows for a more effective analysis for the skewed data that is intrinsic to the well depth dataset (Theil,1950; Sen, 1968). This regression was implemented using the open-source python library “SciPy”, which calculates the Theil-Sen trend of a given dataset and outputs the median slope value, the y-intercept, and the confidence intervals \cite{SciPy2020}.
+
+\subsection*{Histogram}
+
+Histogram plots were generated with the objective of assessing distribution of well depth values over time. These analyses helped to determine whether or not the data followed a consistent lognormal distribution. Data were grouped into 5-year bins for the sake of space, apart from the final bin, which only included values up to the year 2023 (4-year bin), as many of the aquifer datasets did not include well depth values past this time point. This division of values allowed for a balanced analysis of temporal fluctuations in the distribution of well depths and justified the transposing of the data into log space. Upon the generation of histograms, probability density functions were fitted to the data plots and allowed for a clearer identification of depth distributions. For this analysis, it is important to note that each 5-year bin has a designated number of bins that well depth values are divided into. Through increasing the number of bins (ex: from 50 to 500) in a histogram plot, a greater resolution of depth values for a given time period can be provided. Some aquifers required this due to large maximum depth values and relatively large standard deviation values in some 5-year bins.
