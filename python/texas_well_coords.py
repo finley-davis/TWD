@@ -59,8 +59,11 @@ for name, info in aquifers.items():
     # read CSV using pandas
     df = pd.read_csv(info['path'])
     
+    # filter rows where 'Date' year is 1920 or later
+    df_filtered = df[df['Date'].astype(str).str[:4].astype(int) >= 1920]
+    
     # extract coordinates from correct columns (Latitude: col 1, Longitude: col 2)
-    coordinates = df.iloc[:, [1, 2]].dropna().values
+    coordinates = df_filtered.iloc[:, [1, 2]].dropna().values
     
     # convert to GeoDataFrame
     points = gpd.GeoDataFrame(geometry=[Point(lon, lat) for lat, lon in coordinates], crs="EPSG:4326")
