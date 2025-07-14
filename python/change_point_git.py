@@ -101,9 +101,9 @@ def bootstrap_theil_sen(x, y, n_bootstrap=1000, ci=0.10):
 
 
 #function to analyze and plot aquifer data with Theil-Sen trend, 10% CI, and n-values as an inset bar chart
-def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020, output_folder=None, manual_change_points=None):
+def analyze_aquifer_data(file_path, aquifer_name, start_year, end_year, output_folder=None, manual_change_points=None):
     if output_folder is None:
-        output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers/03:28:2025 Slides'
+        output_folder = '/Users/finleydavis/Desktop/ADD'
     
     #load data
     dtype = {'ID': 'int32', 'Lat': 'float32', 'Long': 'float32', 'County': 'category', 'Year': 'int16', 'Depth': 'float32'}
@@ -120,8 +120,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
     print("\nNumber of data points per year:")
     for year, count in yearly_counts.items():
         print(f"Year {year}: {count} data points")
-        with pd.ExcelWriter('/Users/finleydavis/Desktop/Cardenas Research/Excel/Slope Values/Aquifer_n_Values.xlsx', engine='openpyxl', mode='w') as writer:
-            yearly_counts.to_frame(name='n_values').to_excel(writer, sheet_name='n_values', startrow=0, startcol=0, index_label='Year')
+    with pd.ExcelWriter('/Users/finleydavis/Desktop/Cardenas Research/Excel/Slope Values/Aquifer_n_Values.xlsx', engine='openpyxl', mode='w') as writer:
+        yearly_counts.to_frame(name='n_values').to_excel(writer, sheet_name='n_values', startrow=0, startcol=0, index_label='Year')
 
     #calculating annual lognormal means
     def lognormal_mean(x):
@@ -161,8 +161,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
             print(f"Low variance in signal for {aquifer_name}. Skipping change point detection.")
             return  #skip if the variance is too low
         
-    #how sensitive the algorithm is to change points
-    #np.var is the variance of the signal, which is used to determine the penalty for change point detection
+        #how sensitive the algorithm is to change points
+        #np.var is the variance of the signal, which is used to determine the penalty for change point detection
         pen = max(1000, 0.1 * np.var(signal))
 
         try:
@@ -195,9 +195,6 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
 
     # Theil-Sen Trend Line
     #ax.plot(years, years * slope + intercept, '--', color='red', lw=2)#, label=f'Theil-Sen Trend: {slope:.2f} ft/yr')
-    
-    #segment analysis for change points
-
     
     #segment analysis for change points
     prev_cp = 0
@@ -274,21 +271,23 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020
         os.makedirs(output_folder)
     """
     #NOTE: save the plot as a PDF in the specified folder
-    #output_path = os.path.join(output_folder, f'{aquifer_name}_CP_analysis.pdf')
-    #plt.savefig(output_path, format='pdf')
+    output_path = os.path.join(output_folder, f'{aquifer_name}_CP_analysis.pdf')
+    plt.savefig(output_path, format='pdf')
 
     #showing the plot
-    plt.show()
+    #plt.show()
 
 #NOTE:uncomment the following lines to run the function for all aquifers
-"""
-output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/All Aquifers'
+
+""""
+output_folder = '/Users/finleydavis/Desktop/ADD'
 for aquifer_name, properties in aquifers.items():
     file_path = properties['path']
     color = properties['color']
     
     # Call the function for each aquifer
-    analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2020, output_folder=output_folder)
+    analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2023, manual_change_points= aquifer_CP[aquifer_name], output_folder=output_folder)
+
 """
 
 #call this function to analyze a specific aquifer, for example the Ogallala
