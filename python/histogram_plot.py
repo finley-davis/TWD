@@ -64,8 +64,13 @@ def FD_rule(data):
     n = len(data)
     if n < 2:
         return None  # not enough data to compute bin width
+    #this is a pre-requisite to the Freedman-Diaconis rule
+    #calculate the interquartile range (IQR)
+    #q75 is the 75th percentile, q25 is the 25th percentile
+    #IQR is the difference between the 75th and 25th percentiles
     q75, q25 = np.percentile(data, [75, 25])
     IQR = q75 - q25
+    #this is eqn 2 from the Freedman-Diaconis rule
     h = 2 * IQR / (n ** (1/3))
     return h
 
@@ -137,7 +142,8 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2025):
             bin_count = 20#default bin count if n is <2
             bins_log = np.linspace(log_depth_data.min(), log_depth_data.max(), bin_count + 1)
         else:
-            # calculate number of bins based on bin_width
+            #calculate number of bins based on bin_width
+            #this is eqn 3
             bins_num = int(np.ceil((log_depth_data.max() - log_depth_data.min()) / bin_width_log))
             if bins_num < 10:
                 bins_num = 10  # at least 10 bins for better resolution
@@ -252,4 +258,3 @@ for aquifer in [
     'Hueco-Mesilla Bolsons'
 ]:
     plot_histogram(aquifer)
-
