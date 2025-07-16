@@ -1,29 +1,32 @@
-import geopandas as gpd  # import geopandas for handling geospatial data
-import matplotlib.pyplot as plt  # import matplotlib for plotting
-import pandas as pd  # import pandas for data manipulation
-from shapely.geometry import Point  # import Point from shapely for geometric operations
-import numpy as np  # import numpy for numerical operations
-from scipy.interpolate import griddata  # import griddata from scipy for interpolation
-from mpl_toolkits.mplot3d import Axes3D  # import Axes3D for 3d plotting
-import matplotlib.animation as animation  # import animation for creating animations
-from matplotlib.cm import get_cmap  # for colormap
-from matplotlib.colors import Normalize, to_hex  # for normalizing and converting colors
-from matplotlib.animation import FFMpegWriter  # for saving animation
-from matplotlib.offsetbox import OffsetImage, AnnotationBbox
-import matplotlib.image as mpimg
+# Updated code with:
+# 1) Changing date display in the video
+# 2) 2D depth bar showing min/max depth with moving dot for log mean depth
+
+import geopandas as gpd
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
+from matplotlib.cm import get_cmap
+from matplotlib.colors import Normalize, to_hex
+from matplotlib.animation import FFMpegWriter
+from matplotlib.patches import Rectangle
+from matplotlib.font_manager import FontProperties
+from scipy.stats import gmean
 
 # dictionary containing aquifer data
 aquifers = {
     'Ogallala': {
-        'color': 'Reds',  # color for plotting
-        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'  # file path to aquifer data
+        'color': 'Reds',
+        'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Ogallala.csv'
     },
     'Edwards (Balcones Fault Zone)': {
         'color': 'Oranges',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards (Balcones Fault Zone) Aquifer.csv'
     },
     'Edwards-Trinity Plateau': {
-        'color': 'Yellows',
+        'color': 'YlOrBr',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Edwards-Trinity Plateau.csv'
     },
     'Carrizo-Wilcox': {
@@ -34,7 +37,6 @@ aquifers = {
         'color': 'Blues',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Gulf Coast.csv'
     },
-
     'Pecos Valley': {
         'color': 'indigo',
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Pecos Valley.csv'
@@ -52,111 +54,138 @@ aquifers = {
         'path': '/Users/finleydavis/Desktop/Cardenas Research/Raw Data/Parsed Aquifers/Date Sorted/corrected/Hueco-Mesilla Basin.csv'
     }
 }
+#
+# Set up font for year display
+year_font = FontProperties()
+year_font.set_family('sans-serif')
+year_font.set_weight('bold')
+year_font.set_size(24)
 
-# predefined start and end years for the time period
 start_year = 1900
 end_year = 2020
 
-# function that loads and processes aquifer data
 def load_aquifer_data(filepath):
-    df = pd.read_csv(filepath)  # read csv file into dataframe
-    # rename columns for clarity
+    df = pd.read_csv(filepath)
     df.columns = ['Index', 'Unnamed1', 'Unnamed2', 'Unnamed3', 'Unnamed4', 'Unnamed5', 'Lat', 'Long',
                   'Unnamed8', 'Unnamed9', 'Unnamed10', 'County', 'Date', 'Depth', 'Unnamed14', 'Unnamed15', 'Unnamed16']
     
-    df['Date'] = pd.to_datetime(df['Date'], format='%Y', errors='coerce')  # convert date column to datetime
-    df = df[(df['Date'].dt.year >= start_year) & (df['Date'].dt.year <= end_year)]  # filter data by date range
+    df['Date'] = pd.to_datetime(df['Date'], format='%Y', errors='coerce')
+    df = df[(df['Date'].dt.year >= start_year) & (df['Date'].dt.year <= end_year)]
     
-    # convert to numeric values and drop NaNs
-    df['Year'] = df['Date'].dt.year  # extract year from date
-    df['Depth'] = pd.to_numeric(df['Depth'], errors='coerce')  # convert depth to numeric
-    df = df.dropna(subset=['Depth'])  # drop rows with NaN depth
-    
-    # create bins for 5-year interval
-    bins = list(range(start_year, end_year + 1, 5))  # create list of bin edges
-    labels = [f'{bins[i]}-{bins[i+1]-1}' for i in range(len(bins) - 1)]  # create labels for bins
-    df['Year_Bin'] = pd.cut(df['Year'], bins=bins, labels=labels, right=False)  # bin the years
-    
-    return df  #return the processed dataframe
+    df['Year'] = df['Date'].dt.year
+    df['Depth'] = pd.to_numeric(df['Depth'], errors='coerce')
+    df = df.dropna(subset=['Depth'])
+    return df
 
-#load data for the ogallala aquifer
 df = load_aquifer_data(aquifers['Edwards-Trinity Plateau']['path'])
 
-#create figure and 3d axes
-fig = plt.figure(figsize=(15, 12))  # create a figure
-ax = fig.add_subplot(111, projection='3d')  # add a 3d subplot
+# Calculate depth range - using percentiles to handle outliers
+depth_min = 0
+depth_max = df['Depth'].quantile(0.95)  # Using 95th percentile as max to avoid extreme outliers
 
-#plot texas boundary (we can leave this static for now)
-texas = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Python/Texas_Map/TX.geo.json')  # read texas boundary data
+# Create figure with improved layout
+fig = plt.figure(figsize=(16, 10))
+gs = fig.add_gridspec(1, 2, width_ratios=[5, 0.5], wspace=0.1)
+ax = fig.add_subplot(gs[0], projection='3d')
+ax_depth = fig.add_subplot(gs[1])
 
-# setup colormap
-year_bins = sorted(df['Year_Bin'].dropna().unique())  # drop NaNs and sort bins
-norm = Normalize(vmin=0, vmax=len(year_bins) - 1)  # normalize bin indices
-cmap = get_cmap('YlOrBr')  # define colormap
+# Load Texas boundary
+texas = gpd.read_file('/Users/finleydavis/Desktop/Cardenas Research/Python/Texas_Map/TX.geo.json')
 
-#adding image to 
-logo_path = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Ogallala_depth_analysis.png'
-logo_img = mpimg.imread(logo_path)
+# Setup colormap - now using all individual years
+years = sorted(df['Year'].unique())
+norm = Normalize(vmin=min(years), vmax=max(years))
+cmap = get_cmap('YlOrBr')
 
-#function to update the plot for each time step (5-year interval)
+# Initialize depth bar
+def init_depth_bar():
+    ax_depth.clear()
+    ax_depth.set_ylim(depth_max + 50, max(0, depth_min - 50))
+    ax_depth.set_xlim(0, 1)
+    ax_depth.axis('off')
+    
+    ax_depth.add_patch(Rectangle((0.4, depth_min), width=0.2,
+                      height=depth_max - depth_min,
+                      color='lightgray', alpha=0.6))
+    
+    ax_depth.text(0.8, depth_min, f'{int(depth_min)} ft', ha='left', va='center', fontsize=8)
+    ax_depth.text(0.8, depth_max, f'{int(depth_max)} ft', ha='left', va='center', fontsize=8)
+    ax_depth.text(0.5, depth_min - 30, 'Well Depth', ha='center', va='top', fontsize=10)
+
+init_depth_bar()
+depth_dot, = ax_depth.plot([0.5], [depth_min], 'ro', markersize=8)
+
+# Initialize year display
+year_text = fig.text(0.80, 0.92, "", ha='center', va='center', 
+                    fontproperties=year_font, color='black',
+                    bbox=dict(facecolor='white', alpha=0.7, edgecolor='none'))
+
+# Function to update the plot for each time step
 def update_frame(i):
-    current_label = year_bins[i]  #get the current bin label
+    current_year = years[i]
     
-    #clear the current frame
-    ax.cla()  #clear the axes
-
-    ax.view_init(elev=10)#,azim=270)  #change these values as needed
-
-    #plot texas boundary again in 3d at z=0
-    for _, geom in texas.iterrows():  #iterate over each geometry in texas
-        surface_elevation = geom.get('elevation', 0)  #get surface elevation if available
-        if geom.geometry.geom_type == 'Polygon':  #if geometry is a polygon
-            x, y = geom.geometry.exterior.xy  #get x and y coordinates
-            ax.plot(x, y, np.full_like(x, surface_elevation), color='black', linewidth=1)  # plot the polygon
-        elif geom.geometry.geom_type == 'MultiPolygon':  #if geometry is a multipolygon
-            for polygon in geom.geometry.geoms:  #iterate over each polygon
-                x, y = polygon.exterior.xy  #get x and y coordinates
-                ax.plot(x, y, np.full_like(x, surface_elevation), color='black', linewidth=1)  #plot the polygon
+    # Update year display
+    year_text.set_text(f"{current_year}")
     
-    #plot all points up to the current time bin with color gradient
-    for j in range(i + 1):
-        bin_label = year_bins[j]
-        bin_data = df[df['Year_Bin'] == bin_label]
-        color = to_hex(cmap(norm(j)))  #map year bin index to color
-        ax.scatter(
-            bin_data['Long'],  #longitude
-            bin_data['Lat'],  #latitude
-            -bin_data['Depth'],  #negative depth to show below surface
-            color=color,  #color from gradient
-            s=0.5,  #size of points
-            alpha=0.8,  #transparency
-            label=str(bin_label) if j == i else ""  #label only latest bin
-        )
+    # Clear and update main plot
+    ax.cla()
+    ax.view_init(elev=10)
     
-    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)  #adjust subplot parameters
-    #set labels and limits for better visualization
-    ax.set_xlabel("Longitude")  #set x-axis label
-    ax.set_ylabel("Latitude")  #set y-axis label
-    ax.set_zlabel("Depth (ft below surface)")  #set z-axis label
-    ax.set_zlim(-2000, 0)  #set z-axis limits
-    ax.set_title(f"3D Visualization of Texas Aquifer Well Depths (up to {current_label})", pad=0)  #set plot title with adjusted padding
+    # Plot Texas boundary
+    for _, geom in texas.iterrows():
+        surface_elevation = geom.get('elevation', 0)
+        if geom.geometry.geom_type == 'Polygon':
+            x, y = geom.geometry.exterior.xy
+            ax.plot(x, y, np.full_like(x, surface_elevation), color='black', linewidth=1)
+        elif geom.geometry.geom_type == 'MultiPolygon':
+            for polygon in geom.geometry.geoms:
+                x, y = polygon.exterior.xy
+                ax.plot(x, y, np.full_like(x, surface_elevation), color='black', linewidth=1)
+    
+    # Plot all points up to the current year
+    current_data = df[df['Year'] <= current_year]
+    colors = [to_hex(cmap(norm(year))) for year in current_data['Year']]
+    
+    ax.scatter(
+        current_data['Long'],
+        current_data['Lat'],
+        -current_data['Depth'],
+        c=colors,
+        s=0.5,
+        alpha=0.8
+    )
+    
+    # Set labels and title
+    ax.set_xlabel("Longitude")
+    ax.set_ylabel("Latitude")
+    ax.set_zlabel("Depth (ft below surface)")
+    ax.set_zlim(-depth_max - 50, 0)
+    ax.set_title(f"Edwards-Trinity Plateau Aquifer Well Depths Over Time", pad=10)
+    
+    # Update depth bar
+    init_depth_bar()
+    
+    # Calculate lognormal mean for current year
+    current_year_data = df[df['Year'] == current_year]
+    if not current_year_data.empty:
+        # Using geometric mean as lognormal mean
+        lognormal_mean = gmean(current_year_data['Depth'])
+        depth_dot.set_data([0.5], [lognormal_mean])
+        ax_depth.text(0.5, lognormal_mean + 30, 
+                     f'Lognormal Mean:\n{lognormal_mean:.1f} ft', 
+                     ha='center', va='bottom', color='red', fontsize=8)
 
-    imagebox = OffsetImage(logo_img, zoom=0.1)
-    ab = AnnotationBbox(imagebox, (0.9, 0.9), xycoords='axes fraction', frameon=False)
-    #ax.add_artist(ab)
+# Create the animation - now using individual years
+ani = animation.FuncAnimation(fig, update_frame, frames=range(len(years)), 
+                             init_func=lambda: None, repeat=False)
 
-#create the animation
-ani = animation.FuncAnimation(fig, update_frame, frames=range(len(year_bins)), repeat=False)  #create animation
+# Display the plot
+plt.tight_layout()
+plt.show()
 
-#display the plot
-plt.tight_layout()  #adjust layout
-plt.show()  #show the plot
-
-#set up the writer with desired framerate and codec
-writer = FFMpegWriter(fps=3, metadata={'title': 'Texas Aquifer Animation'}, bitrate=1800)
-
-#save the animation
-output_path = '/Users/finleydavis/Desktop/EdwardsTP_aquifer_animation.mp4'
+# Set up the writer and save the animation
+writer = FFMpegWriter(fps=5, metadata={'title': 'Texas Aquifer Animation'}, bitrate=1800)  # Increased FPS for smoother animation
+output_path = '/Users/finleydavis/Desktop/EdwardsTP_aquifer_animation_yearly.mp4'
 ani.save(output_path, writer=writer)
 
 print(f"Animation saved as {output_path}")
