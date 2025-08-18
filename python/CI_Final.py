@@ -76,7 +76,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     annual_means = df.groupby('Date')['Depth'].agg(lognormal_mean).interpolate().reset_index()
     Dates = annual_means['Date'].values
     means = annual_means['Depth'].values
-    print(means)
+    #print(means)
 
     #Documentation for the Theil-Sen estimator: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.theilslopes.html
     slope, intercept, low_slope, high_slope = theilslopes(means, Dates, alpha=0.90)
@@ -99,8 +99,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     lower_ci = np.percentile(bootstrap_trends, 5, axis=0)
     upper_ci = np.percentile(bootstrap_trends, 95, axis=0)
 
-    print(f"{aquifer_name} Theil-Sen slope: {slope:.4f}")
-    print("90% Bootstrap Confidence Interval computed.\n")
+    #print(f"{aquifer_name} Theil-Sen slope: {slope:.4f}")
+    #print("90% Bootstrap Confidence Interval computed.\n")
 
 
     fig, ax = plt.subplots(figsize=(16, 10))
@@ -121,10 +121,11 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     ax.legend(loc='upper right')
     
     plt.tight_layout()
+    #output the TS slope and intercept to terminal
+    print(f"{aquifer_name}, {slope:.4f}, {intercept:.4f}")
+    #plt.show()
 
-    plt.show()
-
-
+    """"
     if output_folder:
         os.makedirs(output_folder, exist_ok=True)
         filename = f"{aquifer_name.replace(' ', '_').replace('(', '').replace(')', '').replace('-', 'v2')}.pdf"
@@ -132,7 +133,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
         plt.savefig(save_path, dpi=300)
         print(f"Saved plot to: {save_path}")
     plt.close()
-#"""
+    """
+"""
 analyze_aquifer_data(file_path=aquifers['Hueco-Mesilla Bolsons']['path'], 
                     aquifer_name = 'Hueco-Mesilla Bolsons', start_date = 1920, end_date = 2023)#, 
                     #output_folder = '/Users/finleydavis/Desktop')
@@ -141,12 +143,12 @@ analyze_aquifer_data(file_path=aquifers['Hueco-Mesilla Bolsons']['path'],
 output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Final Graphs/Confidence Interval'
 
 for aquifer_name in aquifers:
-    print(f"Processing {aquifer_name}...")
+    #print(f"Processing {aquifer_name}...")
     analyze_aquifer_data(
         file_path=aquifers[aquifer_name]['path'],
         aquifer_name=aquifer_name,
         start_date=1920,
-        end_date=2020,
+        end_date=2023,
         output_folder=output_folder
     )
-"""
+#"""

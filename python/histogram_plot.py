@@ -51,11 +51,11 @@ aquifers = {
 aquifer_ylim = {
     'Ogallala': (800, 0),
     'Edwards (Balcones Fault Zone)': (2000, 0),
-    'Edwards-Trinity Plateau': (2000, 0),
+    'Edwards-Trinity Plateau': (1000, 0),
     'Carrizo-Wilcox': (2500, 0),
     'Gulf Coast': (1500, 0),
     'Pecos Valley': (2000, 0),
-    'Seymour': (250, 0),
+    'Seymour': (200, 0),
     'Trinity': (2000, 0),
     'Hueco-Mesilla Bolsons': (1500, 0)
 }
@@ -74,7 +74,7 @@ def FD_rule(data):
     h = 2 * IQR / (n ** (1/3))
     return h
 
-def plot_histogram(aquifer_name, start_year=1920, end_year=2025):
+def plot_histogram(aquifer_name, start_year=1920, end_year=2023):
 
     df = pd.read_csv(aquifers[f'{aquifer_name}']['path'])
 
@@ -204,8 +204,8 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2025):
             print(f'{year_bin}, {mean_original:.2f}, {std_original:.2f}')
             # export to csv file
             #in the csv, add a column for aquifer name
-            with open('/Users/finleydavis/Desktop/lognormal_params.csv', 'a') as f:
-                f.write(f'{year_bin}, {mean_original:.2f}, {std_original:.2f}, {aquifer_name}\n')
+            #with open('/Users/finleydavis/Desktop/lognormal_params.csv', 'a') as f:
+            #    f.write(f'{year_bin}, {mean_original:.2f}, {std_original:.2f}, {aquifer_name}\n')
 
     # theil-sen line
     # calculating the median of the depth data
@@ -246,15 +246,26 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2025):
     plt.savefig(f'/Users/finleydavis/Desktop/ADD/{aquifer_name}_Aquifer_Depth_Distribution.pdf', dpi=300, bbox_inches='tight')
 
 # call the function for given aquifers
+
 for aquifer in [
+    #Ogallala looks good
     'Ogallala',
     'Edwards (Balcones Fault Zone)',
+    #ETP ylim should be 1000, after that it shows nothing
+    #Use the ylim=2000 as bottom image?
     'Edwards-Trinity Plateau',
     'Carrizo-Wilcox',
     'Gulf Coast',
-    'Pecos Valley',
+    #Stop PV xlim @ 2004 (perhaps even 1999)
+    #commenting outfor now as I just ran func for the individual aquifers
+    #'Pecos Valley',
     'Seymour',
     'Trinity',
     'Hueco-Mesilla Bolsons'
 ]:
     plot_histogram(aquifer)
+
+
+#calling function for a single aquifer
+#I am doing this because it's the easiest way to modify PV xlim
+#plot_histogram('Pecos Valley')

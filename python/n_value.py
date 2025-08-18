@@ -60,12 +60,14 @@ def analyze_aquifer_data(file_path, start_year=1920, end_year=2020):
     # Compute n-values (data points per year)
     yearly_counts = df.groupby('Year').size()
 
+
     # Save n-values to an Excel sheet
     #yearly_counts.to_excel('/Users/finleydavis/Desktop/Cardenas Research/Excel/Slope Values/Aquifer_n_Values.xlsx', sheet_name='n_values')
 
     # Print n-values for each year
-    print("\nNumber of data points per year:")
-
+    print(f"\nNumber of data points per year: {yearly_counts}")
+    #yearly_counts_tot = yearly_counts.append()
+    #yearly_counts_tot.to_csv('/Users/finleydavis/Desktop/Aquifer_n_Values.csv', index=False)
 
     # Create an Excel writer outside the loop in append mode
     #with pd.ExcelWriter('/Users/finleydavis/Desktop/Cardenas Research/Excel/Slope Values/Aquifer_n_Values.xlsx', 
@@ -105,8 +107,8 @@ for name, data in aquifers.items():
     file_path = data['path']
     plt.figure()  #create a new figure for each aquifer
     analyze_aquifer_data(file_path, start_year=1920, end_year=2023)
-    
+
     output_path = os.path.join(output_dir, f"{name}_n_values.pdf")
-    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    #plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
 
