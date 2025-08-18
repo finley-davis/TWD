@@ -5,38 +5,39 @@ import pandas as pd
 from scipy.stats import theilslopes, linregress
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
+#file path for the csv file
 aquifers = {
     'Ogallala': {
-        'color': 'red',
+        'color': 'lightblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Ogallala_Final.csv'
     },
     'Edwards (Balcones Fault Zone)': {
-        'color': 'orange',
+        'color': 'darkblue',
         'path': '/Users/finleydavis/Desktop/csvs final/Edwards (Balcones Fault Zone) Aquifer)_Final.csv'
     },
     'Edwards-Trinity Plateau': {
-        'color': 'lime',
+        'color': 'lightgreen',
         'path': '/Users/finleydavis/Desktop/csvs final/Edwards-Trinity Plateau_Final.csv'
     },
     'Carrizo-Wilcox': {
-        'color': 'green',
+        'color': 'red',
         'path': '/Users/finleydavis/Desktop/csvs final/Carrizo-Wilcox_Final.csv'
     },
     'Gulf Coast': {
-        'color': 'blue',
+        'color': 'yellow',
         'path': '/Users/finleydavis/Desktop/csvs final/Gulf Coast_Final.csv'
     },
     'Pecos Valley': {
-        'color': 'indigo',
+        'color': 'orange',
         'path': '/Users/finleydavis/Desktop/csvs final/Pecos Valley_Final.csv'
     },
     'Seymour': {
-        'color': 'violet',
+        'color': 'brown',
         'path': '/Users/finleydavis/Desktop/csvs final/Seymour_Final.csv'
     },
     'Trinity': {
-        'color': 'magenta',
-        'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'
+        'color': 'green',
+        'path': '/Users/finleydavis/Desktop/csvs final/Trinty_Final.csv'  
     },
     'Hueco-Mesilla Bolsons': {
         'color': 'pink',
@@ -125,7 +126,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     print(f"{aquifer_name}, {slope:.4f}, {intercept:.4f}")
     #plt.show()
 
-    """"
+    #""""
     if output_folder:
         os.makedirs(output_folder, exist_ok=True)
         filename = f"{aquifer_name.replace(' ', '_').replace('(', '').replace(')', '').replace('-', 'v2')}.pdf"
@@ -133,14 +134,14 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
         plt.savefig(save_path, dpi=300)
         print(f"Saved plot to: {save_path}")
     plt.close()
-    """
+    #"""
 """
 analyze_aquifer_data(file_path=aquifers['Hueco-Mesilla Bolsons']['path'], 
                     aquifer_name = 'Hueco-Mesilla Bolsons', start_date = 1920, end_date = 2023)#, 
                     #output_folder = '/Users/finleydavis/Desktop')
 """
 # Run the function for all aquifers
-output_folder = '/Users/finleydavis/Desktop/Cardenas Research/Graph_pngs/Final Graphs/Confidence Interval'
+output_folder = '/Users/finleydavis/Desktop/ADD/Confidence Interval'
 
 for aquifer_name in aquifers:
     #print(f"Processing {aquifer_name}...")
