@@ -52,7 +52,7 @@ aquifer_ylim = {
     'Carrizo-Wilcox': (1500, 0),
     'Gulf Coast': (1500, 0),
     'Pecos Valley': (1400, 0),
-    'Seymour': (300, 0),
+    'Seymour': (200, 0),
     'Trinity': (1500, 0),
     'Hueco-Mesilla Bolsons': (1500, 0)
 }
@@ -108,7 +108,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     ax.set_ylim(aquifer_ylim[aquifer_name])
     ax.scatter(df.Date, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis', label=f'Data Points (n={len(df):,})')
     ax.plot(Dates, means, 'ko-', markersize=4, label='Annual Lognormal Means', zorder=4)
-    ax.plot(Dates, trend_line, '--', color=aquifer_color, label=f'Theil-Sen Trend (slope={slope:.2f})', zorder=5)
+    ax.plot(Dates, trend_line, '--', color='black', label=f'Theil-Sen Trend (slope={slope:.2f})', zorder=5)
     #ax.plot(Dates, intercept + low_slope * Dates, 'r--', label='Lower 90% CI', zorder=3)
     #ax.plot(Dates, intercept + high_slope * Dates, 'r--', label='Upper 90% CI', zorder=3)
     ax.fill_between(Dates, lower_ci, upper_ci, alpha=0.3, color=aquifer_color, label='90% Bootstrap CI')
