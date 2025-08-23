@@ -76,15 +76,18 @@ for name, info in aquifers.items():
     total_points += len(points)
 
 # add map details
-plt.xlabel("Longitude")
-plt.ylabel("Latitude")
-plt.grid()
+#plt.xlabel("Longitude")
+#plt.ylabel("Latitude")
+#plt.grid()
+ax.set_xticks([])
+ax.set_yticks([])
+
 plt.tight_layout()
 plt.legend(title="Aquifer Well Points", labels=legend_labels, markerscale=20, loc='lower left', fontsize='small')
 plt.title("Map of Texas with Well Points Delineated by Aquifer")
-#plt.show()
+plt.show()
 
-plt.savefig('/Users/finleydavis/Desktop/Texas_Well_Points.pdf', dpi=300, bbox_inches='tight')
+#plt.savefig('/Users/finleydavis/Desktop/Texas_Well_Points.pdf', dpi=300, bbox_inches='tight')
 
 # output total number of points
 print(f"Total number of points plotted: {total_points}")
