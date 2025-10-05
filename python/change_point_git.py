@@ -101,7 +101,7 @@ def bootstrap_theil_sen(x, y, n_bootstrap=1000, ci=0.10):
 
 
 #function to analyze and plot aquifer data with Theil-Sen trend, 10% CI, and n-values as an inset bar chart
-def analyze_aquifer_data(file_path, aquifer_name, start_year, end_year, output_folder=None, manual_change_points=None):
+def analyze_aquifer_data_CP(file_path, aquifer_name, start_year, end_year, output_folder=None, manual_change_points=None, ax = None):
     if output_folder is None:
         output_folder = '/Users/finleydavis/Desktop/ADD'
     
@@ -185,7 +185,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year, end_year, output_f
 
 
     #creating figure
-    fig, ax = plt.subplots(figsize=(12, 7))
+    #fig, ax = plt.subplots(figsize=(12, 7))
 
     #scatter plot of data points
     ax.scatter(df.Year, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis') #, label=f'Data Points (n={len(df):,})')
@@ -221,12 +221,12 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year, end_year, output_f
         if i < len(change_points) - 1:
             cp_year = years[cp]
             if i == 0:  #add label only for the first vertical line
-                plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1, label='Change Point')
+                ax.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1, label='Change Point')
             else:
-                plt.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1)
+                ax.axvline(cp_year, color=aquifers[aquifer_name]['color'], linestyle='--', alpha=1)
 
             #add text box with the year of the change point
-            plt.text(cp_year, max(means) * 1.1, f'{int(cp_year)}', color='black',#aquifers[aquifer_name]['color'], 
+            ax.text(cp_year, max(means) * 1.1, f'{int(cp_year)}', color='black',#aquifers[aquifer_name]['color'],
                      fontsize=10, ha='center', bbox=dict(facecolor='white', alpha=0.7, edgecolor='none'))
 
         print(f"Segment {i+1} ({seg_years[0]}–{seg_years[-1]}): {seg_slope:.2f} ft/yr")
@@ -246,9 +246,9 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year, end_year, output_f
 
     #formatting
     
-    ax.set_title(f'{aquifer_name} Aquifer Depth Analysis: {start_year}-{end_year}\nTheil-Sen Trends with Changepoint Detection', pad=20)
-    ax.set_xlabel('Year')
-    ax.set_ylabel('Depth (ft)')
+    #ax.set_title(f'{aquifer_name} Aquifer Depth Analysis: {start_year}-{end_year}\nTheil-Sen Trends with Changepoint Detection', pad=20)
+    #ax.set_xlabel('Year')
+    #ax.set_ylabel('Depth (ft)')
     ax.set_ylim(*aquifer_ylim[aquifer_name])
     ax.grid(alpha=0.2)
     ax.legend(loc='upper right')
@@ -271,8 +271,8 @@ def analyze_aquifer_data(file_path, aquifer_name, start_year, end_year, output_f
         os.makedirs(output_folder)
     """
     #NOTE: save the plot as a PDF in the specified folder
-    output_path = os.path.join(output_folder, f'{aquifer_name}_CP_analysis.pdf')
-    plt.savefig(output_path, format='pdf')
+    #output_path = os.path.join(output_folder, f'{aquifer_name}_CP_analysis.pdf')
+    #plt.savefig(output_path, format='pdf')
 
     #showing the plot
     #plt.show()
@@ -286,12 +286,13 @@ for aquifer_name, properties in aquifers.items():
     color = properties['color']
     
     # Call the function for each aquifer
-    analyze_aquifer_data(file_path, aquifer_name, start_year=1920, end_year=2023, manual_change_points= aquifer_CP[aquifer_name], output_folder=output_folder)
+    analyze_aquifer_data_CP(file_path, aquifer_name, start_year=1920, end_year=2023, manual_change_points= aquifer_CP[aquifer_name], output_folder=output_folder)
 
 """
 
+"""
 #call this function to analyze a specific aquifer, for example the Ogallala
-analyze_aquifer_data(file_path = aquifers['Hueco-Mesilla Bolsons']['path'], 
+analyze_aquifer_data_-p;;l.CP(file_path = aquifers['Hueco-Mesilla Bolsons']['path'], 
                     aquifer_name = 'Hueco-Mesilla Bolsons', 
                     start_year=1920, 
                     end_year=2023, 
@@ -302,3 +303,4 @@ analyze_aquifer_data(file_path = aquifers['Hueco-Mesilla Bolsons']['path'],
                     #manual_change_points = aquifer_1980_2020_CP
 
 )
+"""

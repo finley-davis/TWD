@@ -54,7 +54,7 @@ aquifer_ylim = {
     'Edwards-Trinity Plateau': (1000, 0),
     'Carrizo-Wilcox': (2500, 0),
     'Gulf Coast': (1500, 0),
-    'Pecos Valley': (2000, 0),
+    'Pecos Valley': (1250, 0),
     'Seymour': (200, 0),
     'Trinity': (2000, 0),
     'Hueco-Mesilla Bolsons': (1500, 0)
@@ -74,9 +74,11 @@ def FD_rule(data):
     h = 2 * IQR / (n ** (1/3))
     return h
 
-def plot_histogram(aquifer_name, start_year=1920, end_year=2023):
-
-    df = pd.read_csv(aquifers[f'{aquifer_name}']['path'])
+#plot histo for each aquifer
+def plot_histogram(aquifer_file, aquifer_name, start_year=1920, end_year = 2023, ax = None):
+    #read in file from dict.
+    #df = pd.read_csv(aquifers[f'{aquifer_name}']['path'])        For calling this file individually
+    df = pd.read_csv(aquifer_file)
 
     # renaming the columns of the dataframe
     df.columns = ['Index', 'Lat', 'Long','County', 'Date', 'Depth']
@@ -95,6 +97,10 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2023):
     # drop rows with NaN values in the depth column, this is just a check to make sure there are no NaN values
     df = df.dropna(subset=['Depth'])
 
+
+    if ax is None:
+        fig, ax = plt.subplots()
+
     # creating bins for every 5 years within the date range, you can change the interval by changing the 5 to a different number
     bins = list(range(start_year, end_year + 1, 5))
     # creating labels for the bins
@@ -108,14 +114,14 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2023):
     df['Year_Bin'] = pd.cut(df['Year'], bins=bins, labels=labels, right=False)
 
     # set the figure size for the plot, this is the size of the plot in inches, typically 12 x 6 but in this case 15 x 10 because of the size of the data
-    plt.figure(figsize=(15, 10))
+    #plt.figure(figsize=(15, 10))
 
     # getting the unique year bins and sort them
     year_bins = sorted([bin for bin in df['Year_Bin'].unique() if not pd.isna(bin)])
     # creating an array of positions for the x-axis
     x_positions = np.arange(len(year_bins))
 
-    # getting the maximum and minimum depth values
+    # getting the maximum and minimum depth values for writing section
     max_depth = df['Depth'].max()
     min_depth = df['Depth'].min()
 
@@ -163,12 +169,12 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2023):
         
         # plot the histogram as horizontal bars on the left side
         # this is how i'm making the hist plot horizontal (up and down) instead of vertical (left and right)
-        plt.barh(bin_edges[:-1], -hist, height=np.diff(bin_edges), #edgecolor = 'lightgray',
+        ax.barh(bin_edges[:-1], -hist, height=np.diff(bin_edges), #edgecolor = 'lightgray',
                 left=i, color=aquifers[f'{aquifer_name}']['color'], label = 'Histogram' if i == 0 else "")
 
         # plot the histogram as horizontal bars on the right side
         # height = is the height of the bars based on the bin edges, which are the depth values
-        plt.barh(bin_edges[:-1], hist, height=np.diff(bin_edges), #edgecolor = 'lightgray', 
+        ax.barh(bin_edges[:-1], hist, height=np.diff(bin_edges), #edgecolor = 'lightgray', 
                 left=i, color=aquifers[f'{aquifer_name}']['color'])
 
         # depth data points, data for log norm. dist.
@@ -185,9 +191,9 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2023):
             pdf = pdf / pdf.max() * 0.4
 
             # plot the pdf on the left side
-            plt.plot(i - pdf, y_points, 'black', linewidth=2, label='Lognormal PDF' if i == 0 else "")
+            ax.plot(i - pdf, y_points, 'black', linewidth=2, label='Lognormal PDF' if i == 0 else "")
             # plot the pdf on the right side
-            plt.plot(i + pdf, y_points, 'black', linewidth=2)
+            ax.plot(i + pdf, y_points, 'black', linewidth=2)
 
             # mean values in normal space
             mean_original = np.exp(mu + 0.5 * sigma**2)
@@ -212,60 +218,59 @@ def plot_histogram(aquifer_name, start_year=1920, end_year=2023):
     median_depth = df['Depth'].median()
     lognorm_median = np.exp(df['Depth'].apply(np.log).median())
     # plotting the median depth line
-    #plt.axhline(y=median_depth, color='b', linestyle='--', linewidth=2, label='Median Depth')
+    #ax.axhline(y=median_depth, color='b', linestyle='--', linewidth=2, label='Median Depth')
 
     # setting title of the plot
-    plt.title(f'{aquifer_name} Aquifer Depth Distribution with Lognormal Fit (1920-2023)', pad=20)
+    #ax.set_title(f'{aquifer_name} Aquifer Depth Distribution with Lognormal Fit (1920-2023)', pad=20)
     # setting x-axis label
-    plt.xlabel('Year Interval')
+    #ax.set_xlabel('Year Interval')
     # setting y-axis label
-    plt.ylabel('Depth (ft)')
+    #ax.set_ylabel('Depth (ft)')
 
     # setting x-axis ticks, which are the year bins
-    plt.xticks(x_positions, year_bins, rotation=45, ha='right')
+    ax.set_xticks(x_positions)
+    ax.set_xticklabels(year_bins, rotation=45, ha='right')
 
     # flip y-axis
-    plt.gca().invert_yaxis()
+    ax.invert_yaxis()
     # adding a grid to the y-axis, which is the depth axis
-    plt.grid(True, axis='y', linestyle='--')
+    ax.grid(True, axis='y', linestyle='--')
 
     # make the y-lim from the aquifer_ylim dictionary
-    plt.ylim(aquifer_ylim[f'{aquifer_name}'])
+    ax.set_ylim(aquifer_ylim[f'{aquifer_name}'])
     # adding a legend
-    #plt.plot([], [], 'r', linewidth=2, label='Lognormal PDF')
+    #ax.plot([], [], 'r', linewidth=2, label='Lognormal PDF')
 
     # plot the legend in bottom right corner
-    plt.legend(loc='upper right', fontsize=12)
-
-    # adjusting the layout to fit everything
-    plt.tight_layout()
+    ax.legend(loc='upper right', fontsize=12)
 
     # displaying the plot
     #plt.show()
-
-    plt.savefig(f'/Users/finleydavis/Desktop/ADD/{aquifer_name}_Aquifer_Depth_Distribution.pdf', dpi=300, bbox_inches='tight')
+    #save figure to desktop
+    #plt.savefig(f'/Users/finleydavis/Desktop/ADD/{aquifer_name}_Aquifer_Depth_Distribution.pdf', dpi=300, bbox_inches='tight')
 
 # call the function for given aquifers
-
+"""
 for aquifer in [
     #Ogallala looks good
-    'Ogallala',
-    'Edwards (Balcones Fault Zone)',
+    #'Ogallala',
+    #'Edwards (Balcones Fault Zone)',
     #ETP ylim should be 1000, after that it shows nothing
     #Use the ylim=2000 as bottom image?
-    'Edwards-Trinity Plateau',
-    'Carrizo-Wilcox',
-    'Gulf Coast',
+    #'Edwards-Trinity Plateau',
+    #'Carrizo-Wilcox',
+    #'Gulf Coast',
     #Stop PV xlim @ 2004 (perhaps even 1999)
     #commenting outfor now as I just ran func for the individual aquifers
-    #'Pecos Valley',
-    'Seymour',
-    'Trinity',
-    'Hueco-Mesilla Bolsons'
+    #'Pecos Valley'#,
+    #'Seymour',
+    #'Trinity',
+    #'Hueco-Mesilla Bolsons'
 ]:
     plot_histogram(aquifer)
-
+"""
 
 #calling function for a single aquifer
 #I am doing this because it's the easiest way to modify PV xlim
+
 #plot_histogram('Pecos Valley')

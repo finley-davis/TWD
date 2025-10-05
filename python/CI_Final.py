@@ -57,7 +57,7 @@ aquifer_ylim = {
     'Hueco-Mesilla Bolsons': (1500, 0)
 }
 
-def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_folder=None):
+def analyze_aquifer_data_CI(file_path, aquifer_name, start_date, end_date, output_folder=None, ax = None):
     file_path = aquifers[aquifer_name]['path']
     aquifer_color = aquifers[aquifer_name]['color']
 
@@ -104,20 +104,20 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     #print("90% Bootstrap Confidence Interval computed.\n")
 
 
-    fig, ax = plt.subplots(figsize=(16, 10))
+    #fig, ax = plt.subplots(figsize=(16, 10))
     ax.set_ylim(aquifer_ylim[aquifer_name])
     ax.scatter(df.Date, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis', label=f'Data Points (n={len(df):,})')
     ax.plot(Dates, means, 'ko-', markersize=4, label='Annual Lognormal Means', zorder=4)
-    ax.plot(Dates, trend_line, '--', color='black', label=f'Theil-Sen Trend (slope={slope:.2f})', zorder=5)
+    ax.plot(Dates, trend_line, '--', color='black', label=f'Theil-Sen Trend (slope={slope:.2f} ft/yr)', zorder=5)
     #ax.plot(Dates, intercept + low_slope * Dates, 'r--', label='Lower 90% CI', zorder=3)
     #ax.plot(Dates, intercept + high_slope * Dates, 'r--', label='Upper 90% CI', zorder=3)
     ax.fill_between(Dates, lower_ci, upper_ci, alpha=0.3, color=aquifer_color, label='90% Bootstrap CI')
 
 
     #ax.invert_yaxis()
-    ax.set_title(f'{aquifer_name} Aquifer Depth Analysis: {start_date}-{end_date}\nTheil-Sen Trend with 90% Bootstrap CI', pad=20)
-    ax.set_xlabel('Date')
-    ax.set_ylabel('Depth (ft)')
+    #ax.set_title(f'{aquifer_name} Aquifer Depth Analysis: {start_date}-{end_date}\nTheil-Sen Trend with 90% Bootstrap CI', pad=20)     #off for fig
+    #ax.set_xlabel('Date')   #off for fig
+    #ax.set_ylabel('Depth (ft)')  #off for fig
     ax.grid(alpha=0.2)
     ax.legend(loc='upper right')
     
@@ -126,7 +126,7 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
     print(f"{aquifer_name}, {slope:.4f}, {intercept:.4f}")
     #plt.show()
 
-    #""""
+    """"
     if output_folder:
         os.makedirs(output_folder, exist_ok=True)
         filename = f"{aquifer_name.replace(' ', '_').replace('(', '').replace(')', '').replace('-', 'v2')}.pdf"
@@ -134,22 +134,22 @@ def analyze_aquifer_data(file_path, aquifer_name, start_date, end_date, output_f
         plt.savefig(save_path, dpi=300)
         print(f"Saved plot to: {save_path}")
     plt.close()
-    #"""
+    """
 """
-analyze_aquifer_data(file_path=aquifers['Hueco-Mesilla Bolsons']['path'], 
+analyze_aquifer_data_CI(file_path=aquifers['Hueco-Mesilla Bolsons']['path'], 
                     aquifer_name = 'Hueco-Mesilla Bolsons', start_date = 1920, end_date = 2023)#, 
                     #output_folder = '/Users/finleydavis/Desktop')
-"""
+
 # Run the function for all aquifers
 output_folder = '/Users/finleydavis/Desktop/ADD/Confidence Interval'
 
 for aquifer_name in aquifers:
     #print(f"Processing {aquifer_name}...")
-    analyze_aquifer_data(
+    analyze_aquifer_data_CI(
         file_path=aquifers[aquifer_name]['path'],
         aquifer_name=aquifer_name,
         start_date=1920,
         end_date=2023,
         output_folder=output_folder
     )
-#"""
+"""

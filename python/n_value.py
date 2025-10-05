@@ -48,7 +48,7 @@ aquifers = {
 }
 
 # Function to analyze and plot aquifer data with Theil-Sen trend, 10% CI, and n-values as an inset bar chart
-def analyze_aquifer_data(file_path, start_year=1920, end_year=2020):
+def analyze_aquifer_data_n(file_path, aquifer_name, start_year=1920, end_year=2020, ax = None):
     # Load and clean data
     dtype = {'ID': 'int32', 'Lat': 'float32', 'Long': 'float32', 'County': 'category', 'Year': 'int16', 'Depth': 'float32'}
     chunks = pd.read_csv(file_path, chunksize=10000, dtype=dtype)
@@ -60,7 +60,9 @@ def analyze_aquifer_data(file_path, start_year=1920, end_year=2020):
     # Compute n-values (data points per year)
     yearly_counts = df.groupby('Year').size()
 
-
+    #for fig
+    if ax is None:
+        fig, ax = plt.subplots()
     # Save n-values to an Excel sheet
     #yearly_counts.to_excel('/Users/finleydavis/Desktop/Cardenas Research/Excel/Slope Values/Aquifer_n_Values.xlsx', sheet_name='n_values')
 
@@ -84,11 +86,11 @@ def analyze_aquifer_data(file_path, start_year=1920, end_year=2020):
     #
     #        #i += 3
 
-    plt.bar(yearly_counts.index, yearly_counts.values, color='black', width=0.8)
-    plt.xlabel('Year')
-    plt.ylabel('Number of Data Points')
-    plt.title(f"{[k for k, v in aquifers.items() if v['path'] == file_path][0]} Number of Data Points per Year")
-    plt.grid(True)
+    ax.bar(yearly_counts.index, yearly_counts.values, color='black', width=0.8)
+    #ax.set_xlabel('Year')     #off for fig
+    #ax.set_ylabel('Number of Data Points')     #off for fig
+    #ax.set_title(f"{aquifer_name} Number of Data Points per Year")     #off for fig
+    ax.grid(True)
 
     # Show the plot
     #plt.show()
@@ -99,16 +101,18 @@ def analyze_aquifer_data(file_path, start_year=1920, end_year=2020):
 safe_folder_name = "n_values_all_aquifers"
 
 #create the output directory
-output_dir = f"/Users/finleydavis/Desktop/Figures{safe_folder_name}"
-os.makedirs(output_dir, exist_ok=True)
+#output_dir = f"/Users/finleydavis/Desktop/Figures{safe_folder_name}"   #off for fig
+#os.makedirs(output_dir, exist_ok=True).     #off for fig
 
+"""
 #main loop to generate and save each aquifer plot
 for name, data in aquifers.items():
     file_path = data['path']
     plt.figure()  #create a new figure for each aquifer
-    analyze_aquifer_data(file_path, start_year=1920, end_year=2023)
+    analyze_aquifer_data_n(file_path, start_year=1920, end_year=2023)
 
     output_path = os.path.join(output_dir, f"{name}_n_values.pdf")
     #plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
 
+"""
