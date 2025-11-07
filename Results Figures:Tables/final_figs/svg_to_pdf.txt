@@ -1,0 +1,2 @@
+rsvg-convert -f pdf -o aquifer_map.pdf aquifer_map.svg
+
