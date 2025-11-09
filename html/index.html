@@ -86,6 +86,15 @@
       header h1{font-size:1.9rem}
       h2{font-size:1.25rem}
     }
+    
+    .iframe-wrapper {
+      margin-top: 1.5rem;
+      width: 100%;
+      height: auto;
+    }
+    iframe {
+      background: #fff;
+    }
   </style>
 </head>
 
@@ -146,6 +155,25 @@
           Your browser does not support the video tag.
         </video>
       </div>
+       <section>
+      <h2>2-D Interactive Chart</h2>
+      <p>
+        Explore annual groundwater well depth trends for the Ogallala Aquifer.
+        The plot is interactive — hover, zoom, or pan to inspect details.
+      </p>
+
+      <div class="iframe-wrapper">
+        <iframe
+          src="https://finley-davis.github.io/TWD/html/plots/ogallala_aquifer_interactive.html"
+          title="Ogallala Aquifer Interactive Chart"
+          width="100%"
+          height="500"
+          frameborder="0"
+          style="border:1px solid #ccc; border-radius:8px;"
+          allowfullscreen>
+        </iframe>
+      </div>
+     </section>
 <!--
       <div id="carrizo" class="video-wrapper">
         <video controls>
