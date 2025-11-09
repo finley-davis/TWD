@@ -175,7 +175,7 @@ def update_frame(i):
                      f'Lognormal Mean:\n{lognormal_mean:.1f} ft', 
                      ha='center', va='bottom', color='red', fontsize=8)
 
-# Create the animation - now using individual years
+#create animation
 ani = animation.FuncAnimation(fig, update_frame, frames=range(len(years)), 
                              init_func=lambda: None, repeat=False)
 
