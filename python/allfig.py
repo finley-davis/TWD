@@ -2,7 +2,7 @@
 from CI_Final import analyze_aquifer_data_CI
 from histogram_plot import plot_histogram
 from n_value import analyze_aquifer_data_n
-from change_point_git import analyze_aquifer_data_CP
+from change_point import analyze_aquifer_data_CP
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
@@ -47,28 +47,28 @@ aquifers = {
     }
 }
 
-# Test a function
-aquifer_file = aquifers['Hueco-Mesilla Bolsons']['path']
+#test a function
+aquifer_file = aquifers['Ogallala']['path']
 
 # Create a 2x2 grid
 fig, axs = plt.subplots(2, 2, figsize=(12, 10))
 
 # Call your functions, but pass in the axis you want to draw on
-analyze_aquifer_data_CI(aquifer_file, 'Hueco-Mesilla Bolsons', 1920, 2023, ax=axs[0,0])
+analyze_aquifer_data_CI(aquifer_file, 'Ogallala', 1920, 2023, ax=axs[0,0])
 axs[0,0].set_title("Theil-Sen Regression Plot", fontsize=18)
 
-analyze_aquifer_data_CP(aquifer_file, 'Hueco-Mesilla Bolsons', 1920, 2023, None, [1968, 1987, 2023], ax=axs[0,1])
+analyze_aquifer_data_CP(aquifer_file, 'Ogallala', 1920, 2023, None, [1968, 1987, 2023], ax=axs[0,1])
 
 axs[0,1].set_title("Change Point Analysis", fontsize=18)
 
-plot_histogram(aquifer_file, 'Hueco-Mesilla Bolsons', 1920, ax=axs[1,0])
+plot_histogram(aquifer_file, 'Ogallala', 1920, ax=axs[1,0])
 axs[1,0].set_title("Histogram", fontsize=18)
 
-analyze_aquifer_data_n(aquifer_file, 'Hueco-Mesilla Bolsons', 1920, 2023, ax=axs[1,1])
+analyze_aquifer_data_n(aquifer_file, 'Ogallala', 1920, 2023, ax=axs[1,1])
 axs[1,1].set_title("N-Value", fontsize=18)
 
 #set title
-fig.suptitle('Hueco-Mesilla Bolsons Aquifer Analysis', fontsize=22)
+fig.suptitle('Ogallala Aquifer Analysis', fontsize=22) #no title for pub
 
 #fix issue w overlapping subplots
 plt.tight_layout(rect=[0.08, 0, 1, 0.95])
@@ -90,4 +90,5 @@ axs[1,1].set_ylabel('Sample Size (n)', fontsize=14)
 
 # Adjust layout
 plt.tight_layout()
-plt.savefig('/Users/finleydavis/Desktop/Cardenas Research/Paper/Results Figures:Tables/final_figs/allfig_Hueco_Mesilla_Bolsons.svg', dpi=300)
+plt.show()
+#plt.savefig('/Users/finleydavis/Desktop/Fall 25 Courses/Phys Hydro/Project/Ogallala.svg', dpi=300)

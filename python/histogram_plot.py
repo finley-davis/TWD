@@ -227,6 +227,9 @@ def plot_histogram(aquifer_file, aquifer_name, start_year=1920, end_year = 2023,
     # setting y-axis label
     #ax.set_ylabel('Depth (ft)')
 
+    ax.set_facecolor('lightgrey') 
+    ax.patch.set_alpha(0.2)
+
     # setting x-axis ticks, which are the year bins
     ax.set_xticks(x_positions)
     ax.set_xticklabels(year_bins, rotation=45, ha='right')

@@ -188,11 +188,22 @@ def analyze_aquifer_data_CP(file_path, aquifer_name, start_year, end_year, outpu
     #fig, ax = plt.subplots(figsize=(12, 7))
 
     #scatter plot of data points
-    ax.scatter(df.Year, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis') #, label=f'Data Points (n={len(df):,})')
+    Dates = np.array(years)
+    year_id = np.array([min(np.argmin(abs(Dates - d)), len(means)-1) for d in df.Year])
+    print(f'Year ID ----- {len(year_id)}' )
+    point_mean = means[year_id]
+    dev = np.abs(df.Depth - point_mean)
+    #normalize then invert for colo mapping
+    df['mean_color'] = 1 - (dev / dev.max())
+    #df['mean_color'] = 1/ (1 + np.abs(df.Depth - point_mean)) * 1000#(1 / (1 + np.abs(df.Depth - point_mean))) * 1000
+    print(f'Mean Color ----- {len(df["mean_color"])}' )
+    print(df['mean_color'].head())
+    ax.scatter(df.Year, df.Depth, s=5, alpha=0.3, c=df.mean_color, cmap='Purples', label=f'Data Points (n={len(df):,})')
 
     #annual means plot
     ax.plot(years, means, 'ko-', markersize=4)#, label='Annual Means', zorder=4)
-
+    ax.set_facecolor('lightgrey') 
+    ax.patch.set_alpha(0.2)
     # Theil-Sen Trend Line
     #ax.plot(years, years * slope + intercept, '--', color='red', lw=2)#, label=f'Theil-Sen Trend: {slope:.2f} ft/yr')
     

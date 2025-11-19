@@ -85,6 +85,8 @@ def analyze_aquifer_data_n(file_path, aquifer_name, start_year=1920, end_year=20
     #        #df.to_excel(writer, sheet_name='n_values', startrow=1, startcol=i, index_label='Year')
     #
     #        #i += 3
+    ax.set_facecolor('lightgrey') 
+    ax.patch.set_alpha(0.2)
 
     ax.bar(yearly_counts.index, yearly_counts.values, color='black', width=0.8)
     #ax.set_xlabel('Year')     #off for fig

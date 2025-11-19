@@ -106,13 +106,36 @@ def analyze_aquifer_data_CI(file_path, aquifer_name, start_date, end_date, outpu
 
     #fig, ax = plt.subplots(figsize=(16, 10))
     ax.set_ylim(aquifer_ylim[aquifer_name])
-    ax.scatter(df.Date, df.Depth, s=5, alpha=0.1, c=df.Depth, cmap='viridis', label=f'Data Points (n={len(df):,})')
+    #map to mean depth to rep. higher concentration
+    print(f'Date ----- {len(df['Date'])}')
+    print(f'Depth ----- {len(df['Depth'])}')
+    print(f'Means ----- {len(means)}')
+    print(f'Dates ----- {len(Dates)}')
+    #mean depth algorithm
+
+    #color mapping based on deviation from mean (concentration estimation)
+    #NOTE: Add this to others asap
+    Dates = np.array(Dates)
+    year_id = np.array([min(np.argmin(abs(Dates - d)), len(means)-1) for d in df.Date])
+    print(f'Year ID ----- {len(year_id)}' )
+    point_mean = means[year_id]
+    dev = np.abs(df.Depth - point_mean)
+    #normalize then invert for colo mapping
+    df['mean_color'] = 1 - (dev / dev.max())
+    #df['mean_color'] = 1/ (1 + np.abs(df.Depth - point_mean)) * 1000#(1 / (1 + np.abs(df.Depth - point_mean))) * 1000
+    print(f'Mean Color ----- {len(df["mean_color"])}' )
+    print(df['mean_color'].head())
+
+
+    #add c=df.#### when above is figured out
+    ax.scatter(df.Date, df.Depth, s=5, alpha=0.3, c=df.mean_color, cmap='Purples', label=f'Data Points (n={len(df):,})')
     ax.plot(Dates, means, 'ko-', markersize=4, label='Annual Lognormal Means', zorder=4)
     ax.plot(Dates, trend_line, '--', color='black', label=f'Theil-Sen Trend (slope={slope:.2f} ft/yr)', zorder=5)
     #ax.plot(Dates, intercept + low_slope * Dates, 'r--', label='Lower 90% CI', zorder=3)
     #ax.plot(Dates, intercept + high_slope * Dates, 'r--', label='Upper 90% CI', zorder=3)
     ax.fill_between(Dates, lower_ci, upper_ci, alpha=0.3, color=aquifer_color, label='90% Bootstrap CI')
-
+    ax.set_facecolor('lightgrey') 
+    ax.patch.set_alpha(0.2)
 
     #ax.invert_yaxis()
     #ax.set_title(f'{aquifer_name} Aquifer Depth Analysis: {start_date}-{end_date}\nTheil-Sen Trend with 90% Bootstrap CI', pad=20)     #off for fig
@@ -125,6 +148,7 @@ def analyze_aquifer_data_CI(file_path, aquifer_name, start_date, end_date, outpu
     #output the TS slope and intercept to terminal
     print(f"{aquifer_name}, {slope:.4f}, {intercept:.4f}")
     #plt.show()
+
 
     """"
     if output_folder:
