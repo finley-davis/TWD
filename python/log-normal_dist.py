@@ -112,7 +112,10 @@ props = dict(boxstyle='round', facecolor='wheat', alpha=0.5)
 #switch x and pdf for horizontal plot
 plt.plot(x, pdf, 'r', linewidth=2) #peak is most likely value, most common well depth
 #labels
-plt.title(f'Ogallala Lognormal Distribution of Well Depth Data ({start_year}-{end_year})')
+plt.gca().set_facecolor('lightgrey') 
+plt.gca().patch.set_alpha(0.2)
+
+#plt.title(f'Ogallala Lognormal Distribution of Well Depth Data ({start_year}-{end_year})')
 plt.xlabel('Depth')
 plt.ylabel('Density')
 plt.legend(['Histogram','Fitted PDF'])

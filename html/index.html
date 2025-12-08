@@ -95,6 +95,18 @@
     iframe {
       background: #fff;
     }
+    .svg-wrapper {
+    display: none;
+    margin-top: 1.5rem;
+  }
+
+  .svg-wrapper img {
+    width: 100%;
+    max-width: 1000px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+
   </style>
 </head>
 
@@ -217,6 +229,62 @@
       </div>
     -->
     </section>
+    <section>
+  <h2>Final Figures (SVG)</h2>
+  <p>Click an aquifer to view the final compiled SVG figure.</p>
+
+  <div id="svgButtons">
+    <button onclick="showSVG('svg_ogallala')">Ogallala</button>
+    <button onclick="showSVG('svg_edwards')">Edwards (Balcones FZ)</button>
+    <button onclick="showSVG('svg_etp')">Edwards-Trinity Plateau</button>
+    <button onclick="showSVG('svg_carrizo')">Carrizo-Wilcox</button>
+    <button onclick="showSVG('svg_gulf')">Gulf Coast</button>
+    <button onclick="showSVG('svg_pecos')">Pecos Valley</button>
+    <button onclick="showSVG('svg_seymour')">Seymour</button>
+    <button onclick="showSVG('svg_trinity')">Trinity</button>
+    <button onclick="showSVG('svg_hueco')">Hueco–Mesilla</button>
+  </div>
+
+  <!-- SVG containers -->
+  <div id="svg_ogallala" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Ogallala.svg">
+  </div>
+
+  <div id="svg_edwards" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Edwards_Balcones_Fault_Zone.svg">
+  </div>
+
+  <div id="svg_etp" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Edwards-Trinity_Plateau.svg">
+  </div>
+
+  <div id="svg_carrizo" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Carrizo-Wilcox.svg">
+  </div>
+
+  <div id="svg_gulf" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Gulf_Coast.svg">
+  </div>
+
+  <div id="svg_pecos" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Pecos_Valley.svg">
+  </div>
+
+  <div id="svg_seymour" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Seymour.svg">
+  </div>
+
+  <div id="svg_trinity" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Trinity.svg">
+  </div>
+
+  <div id="svg_hueco" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Hueco_Mesilla_Bolsons.svg">
+  </div>
+
+</section>
+</section>
+
   </main>
 
   <!-- ===== Footer ===== -->
@@ -225,26 +293,39 @@
   </footer>
 
   <!-- ===== JavaScript ===== -->
-  <script>
-    function showVideo(id){
-      // Hide every video wrapper
-      document.querySelectorAll('.video-wrapper').forEach(div=>{
-        div.style.display='none';
-        // pause any playing video
-        const vid = div.querySelector('video');
-        if(vid){ vid.pause(); vid.currentTime = 0; }
-      });
+<script>
+  function showVideo(id){
+    // Hide every video wrapper
+    document.querySelectorAll('.video-wrapper').forEach(div=>{
+      div.style.display='none';
+      const vid = div.querySelector('video');
+      if(vid){ vid.pause(); vid.currentTime = 0; }
+    });
 
-      // Show the requested one
-      const target = document.getElementById(id);
-      if(target){
-        target.style.display='block';
-        const vid = target.querySelector('video');
-        if(vid){ vid.play(); }
-      }
-      // Scroll to video for convenience
-      target.scrollIntoView({behavior:'smooth', block:'start'});
+    // Show the selected video
+    const target = document.getElementById(id);
+    if(target){
+      target.style.display='block';
+      const vid = target.querySelector('video');
+      if(vid){ vid.play(); }
+      target.scrollIntoView({ behavior:'smooth', block:'start' });
     }
-  </script>
+  }
+
+  function showSVG(id) {
+    // Hide all SVG wrappers
+    document.querySelectorAll('.svg-wrapper').forEach(div => {
+      div.style.display = 'none';
+    });
+
+    // Show the clicked SVG
+    const target = document.getElementById(id);
+    if (target) {
+      target.style.display = 'block';
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+</script>
+
 </body>
 </html>

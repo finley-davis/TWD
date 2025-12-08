@@ -92,4 +92,4 @@ axs[1,1].set_ylabel('Sample Size (n)', fontsize=14)
 # Adjust layout
 plt.tight_layout()
 #plt.show()
-plt.savefig('/Users/finleydavis/Desktop/Fall 25 Courses/Phys Hydro/Project/Ogallala.svg', dpi=300)
+plt.savefig('/Users/finleydavis/Desktop/Fall 25 Courses/Phys Hydro/Project/Ogallala.pdf', dpi=300)
