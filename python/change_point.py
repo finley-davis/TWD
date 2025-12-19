@@ -262,7 +262,7 @@ def analyze_aquifer_data_CP(file_path, aquifer_name, start_year, end_year, outpu
     #ax.set_ylabel('Depth (ft)')
     ax.set_ylim(*aquifer_ylim[aquifer_name])
     ax.grid(alpha=0.2)
-    ax.legend(loc='upper right')
+    ax.legend(loc='upper right', fontsize = 8)
 
     #inset Bar Chart for n-values, removed for now
     """

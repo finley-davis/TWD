@@ -142,7 +142,7 @@ def analyze_aquifer_data_CI(file_path, aquifer_name, start_date, end_date, outpu
     #ax.set_xlabel('Date')   #off for fig
     #ax.set_ylabel('Depth (ft)')  #off for fig
     ax.grid(alpha=0.2)
-    ax.legend(loc='upper right')
+    ax.legend(loc='upper right', fontsize = 8)
     
     plt.tight_layout()
     #output the TS slope and intercept to terminal

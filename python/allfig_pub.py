@@ -47,25 +47,27 @@ aquifers = {
     }
 }
 
+#select aquifer to plot
+aquifer = 'Gulf Coast'
 #test a function
-aquifer_file = aquifers['Ogallala']['path']
+aquifer_file = aquifers[aquifer]['path']
 
 # Create a 2x2 grid
 fig, axs = plt.subplots(2, 2, figsize=(12, 10))
 
 # Call your functions, but pass in the axis you want to draw on
 #No titles for pub, add these only for pres.
-analyze_aquifer_data_CI(aquifer_file, 'Ogallala', 1920, 2023, ax=axs[0,0])
+analyze_aquifer_data_CI(aquifer_file, aquifer, 1920, 2023, ax=axs[0,0])
 #axs[0,0].set_title("Theil-Sen Regression Plot", fontsize=18)
 
-analyze_aquifer_data_CP(aquifer_file, 'Ogallala', 1920, 2023, None, [1968, 1987, 2023], ax=axs[0,1])
+analyze_aquifer_data_CP(aquifer_file, aquifer, 1920, 2023, None, [1968, 1987, 2023], ax=axs[0,1])
 
 #axs[0,1].set_title("Change Point Analysis", fontsize=18)
 
-plot_histogram(aquifer_file, 'Ogallala', 1920, ax=axs[1,0])
+plot_histogram(aquifer_file, aquifer, 1920, ax=axs[1,0])
 #axs[1,0].set_title("Histogram", fontsize=18)
 
-analyze_aquifer_data_n(aquifer_file, 'Ogallala', 1920, 2023, ax=axs[1,1])
+analyze_aquifer_data_n(aquifer_file, aquifer, 1920, 2023, ax=axs[1,1])
 #axs[1,1].set_title("N-Value", fontsize=18)
 
 #set title
@@ -92,4 +94,4 @@ axs[1,1].set_ylabel('Sample Size (n)', fontsize=14)
 # Adjust layout
 plt.tight_layout()
 #plt.show()
-plt.savefig('/Users/finleydavis/Desktop/Fall 25 Courses/Phys Hydro/Project/Ogallala.pdf', dpi=300)
+plt.savefig(f'/Users/finleydavis/Desktop/{aquifer}.pdf', dpi=300)

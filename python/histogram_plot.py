@@ -245,7 +245,7 @@ def plot_histogram(aquifer_file, aquifer_name, start_year=1920, end_year = 2023,
     #ax.plot([], [], 'r', linewidth=2, label='Lognormal PDF')
 
     # plot the legend in bottom right corner
-    ax.legend(loc='upper right', fontsize=12)
+    ax.legend(loc='upper right', fontsize=8)
 
     # displaying the plot
     #plt.show()
