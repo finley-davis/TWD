@@ -126,20 +126,18 @@
 
 <script>
   function openAGU() {
-    window.open("images/agu_presentation.png", "_blank");
+    window.open("https://raw.githubusercontent.com/finley-davis/TWD/main/html/Images/IMG_4033.jpeg", "_blank");
   }
 </script>
 
 
 <body>
 
-  <!-- ===== Header ===== -->
   <header>
     <h1>Texas Well Depth Project</h1>
     <div class="subtitle">Visualization of Aquifer Well Depths over the Past Century (1920-2023)</div>
   </header>
 
-  <!-- ===== Main ===== -->
   <main>
     <section>
       <h2>Project Overview</h2>
@@ -147,6 +145,89 @@
         Texas aquifers are vital sources of groundwater for millions of people. This project visualizes well depth trends across major aquifers in Texas over the past century.
       </p>
     </section>
+
+    <section>
+  <h2>Final Figures</h2>
+  <p>Click an aquifer to view the final compiled figure.</p>
+
+  <div id="aquiferButtons">
+
+    <!-- same format as prior buttons-->
+    <button onclick="showSVG('svg_ogallala')">Ogallala</button>
+    <button onclick="showSVG('svg_edwards')">Edwards (Balcones FZ)</button>
+    <button onclick="showSVG('svg_etp')">Edwards-Trinity Plateau</button>
+    <button onclick="showSVG('svg_carrizo')">Carrizo-Wilcox</button>
+    <button onclick="showSVG('svg_gulf')">Gulf Coast</button>
+    <button onclick="showSVG('svg_pecos')">Pecos Valley</button>
+    <button onclick="showSVG('svg_seymour')">Seymour</button>
+    <button onclick="showSVG('svg_trinity')">Trinity</button>
+    <button onclick="showSVG('svg_hueco')">Hueco–Mesilla</button>
+  </div>
+
+  <p>
+    These figures depict groundwater well depth trends in the nine major aquifers of Texas using various 
+    visualization methods (a) Theil-Sen Trend (b) Change Point Intervals (c) Vertical Histograms (d) N-Value Plots. 
+    The y-axis axis values represent feet below ground surface, with larger values indicating deeper wells.
+  </p>
+      <!-- 2d int. chart, commented for now, not great figure
+         <section>
+      <h2> Ogallala 2-D Interactive Chart</h2>
+      <p>
+        Annual groundwater well depth trends for the Ogallala Aquifer.
+      </p>
+
+  
+      <div class="iframe-wrapper">
+        <iframe
+          src="https://finley-davis.github.io/TWD/html/plots/ogallala_aquifer_interactive.html"
+          title="Ogallala Aquifer Interactive Chart"
+          width="100%"
+          height="500"
+          frameborder="0"
+          style="border:1px solid #ccc; border-radius:8px;"
+          allowfullscreen>
+        </iframe>
+      </div>-->
+
+        <!-- SVG containers -->
+  <div id="svg_ogallala" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Ogallala.svg">
+  </div>
+
+  <div id="svg_edwards" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Edwards_Balcones_Fault_Zone.svg">
+  </div>
+
+  <div id="svg_etp" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Edwards-Trinity_Plateau.svg">
+  </div>
+
+  <div id="svg_carrizo" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Carrizo-Wilcox.svg">
+  </div>
+
+  <div id="svg_gulf" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Gulf_Coast.svg">
+  </div>
+
+  <div id="svg_pecos" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Pecos_Valley.svg">
+  </div>
+
+  <div id="svg_seymour" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Seymour.svg">
+  </div>
+
+  <div id="svg_trinity" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Trinity.svg">
+  </div>
+
+  <div id="svg_hueco" class="svg-wrapper">
+    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Hueco_Mesilla_Bolsons.svg">
+  </div>
+
+</section>
+     </section>
 
     <section>
       <h2>3-D Aquifer Animations</h2>
@@ -232,89 +313,34 @@
       </div>
     -->
     </section>
+
+</section>
+
     <section>
-  <h2>Final Figures (SVG)</h2>
-  <p>Click an aquifer to view the final compiled SVG figure.</p>
+      <h2>AGU Presentation Image</h2>
+      <p>Click the button below to view the image presented at the 2024 AGU Fall Meeting.</p>
+      <button class="agu-btn" onclick="openAGU()">View AGU Presentation Image</button>
+</section>
 
-  <div id="svgButtons">
-    <button onclick="showSVG('svg_ogallala')">Ogallala</button>
-    <button onclick="showSVG('svg_edwards')">Edwards (Balcones FZ)</button>
-    <button onclick="showSVG('svg_etp')">Edwards-Trinity Plateau</button>
-    <button onclick="showSVG('svg_carrizo')">Carrizo-Wilcox</button>
-    <button onclick="showSVG('svg_gulf')">Gulf Coast</button>
-    <button onclick="showSVG('svg_pecos')">Pecos Valley</button>
-    <button onclick="showSVG('svg_seymour')">Seymour</button>
-    <button onclick="showSVG('svg_trinity')">Trinity</button>
-    <button onclick="showSVG('svg_hueco')">Hueco–Mesilla</button>
-  </div>
-
-         <section>
-      <h2> Ogallala 2-D Interactive Chart</h2>
+    <section>
+      <h2>A Simple Conclusion</h2>
       <p>
-        Annual groundwater well depth trends for the Ogallala Aquifer.
+        The analysis of long-term well depth trends in Texas reveals that over the past century, 
+        well depths in all but one of the major aquifers (Edwards (Balcones Fault Zone)) have deepened. 
+        These findings suggest that Texans must drill to deeper depths to extract groundwater, 
+        which poses issues for drinking water accessibility, as well as for the productivity of 
+        agriculture and industry.
       </p>
+    </section>
 
-      <div class="iframe-wrapper">
-        <iframe
-          src="https://finley-davis.github.io/TWD/html/plots/ogallala_aquifer_interactive.html"
-          title="Ogallala Aquifer Interactive Chart"
-          width="100%"
-          height="500"
-          frameborder="0"
-          style="border:1px solid #ccc; border-radius:8px;"
-          allowfullscreen>
-        </iframe>
-      </div>
-     </section>
-
-  <!-- SVG containers -->
-  <div id="svg_ogallala" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Ogallala.svg">
-  </div>
-
-  <div id="svg_edwards" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Edwards_Balcones_Fault_Zone.svg">
-  </div>
-
-  <div id="svg_etp" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Edwards-Trinity_Plateau.svg">
-  </div>
-
-  <div id="svg_carrizo" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Carrizo-Wilcox.svg">
-  </div>
-
-  <div id="svg_gulf" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Gulf_Coast.svg">
-  </div>
-
-  <div id="svg_pecos" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Pecos_Valley.svg">
-  </div>
-
-  <div id="svg_seymour" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Seymour.svg">
-  </div>
-
-  <div id="svg_trinity" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Trinity.svg">
-  </div>
-
-  <div id="svg_hueco" class="svg-wrapper">
-    <img src="https://raw.githubusercontent.com/finley-davis/TWD/main/Results%20Figures%3ATables/final_figs/allfig_Hueco_Mesilla_Bolsons.svg">
-  </div>
-
-</section>
-</section>
 
   </main>
 
-  <!-- ===== Footer ===== -->
   <footer>
-    &copy; <!--2025 UT Austin Jackson School of Geosciences | -->Project by Finley Davis
+    <!--&copy;2025 UT Austin Jackson School of Geosciences | -->Project by H. Finley Davis
   </footer>
 
-  <!-- ===== JavaScript ===== -->
+<!-- JavaScript :.()-->
 <script>
   function showVideo(id){
     // Hide every video wrapper
