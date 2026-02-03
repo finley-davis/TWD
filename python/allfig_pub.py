@@ -46,10 +46,7 @@ aquifers = {
         'path': '/Users/finleydavis/Desktop/csvs final/Hueco-Mesilla Basin_Final.csv'
     }
 }
-
-#select aquifer to plot
-aquifer = 'Gulf Coast'
-#test a function
+aquifer = 'Ogallala'
 aquifer_file = aquifers[aquifer]['path']
 
 # Create a 2x2 grid
@@ -94,4 +91,11 @@ axs[1,1].set_ylabel('Sample Size (n)', fontsize=14)
 # Adjust layout
 plt.tight_layout()
 #plt.show()
-plt.savefig(f'/Users/finleydavis/Desktop/{aquifer}.pdf', dpi=300)
+
+#output aquifers
+#for aquifer in aquifers:
+#    aquifer_file = aquifers[aquifer]['path']
+#    plt.savefig(f'/Users/finleydavis/Desktop/{aquifer}.svg', dpi=300)
+
+#test a function
+plt.savefig(f'/Users/finleydavis/Desktop/{aquifer}.svg', dpi=300)
